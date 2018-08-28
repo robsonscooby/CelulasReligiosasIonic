@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Teste Celula
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openCadastroCelula()">
+        <ion-icon name="md-add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>
+      Celulas
+    </ion-list-header>
+
+    <ion-item *ngFor="let celula of celulaList | async">
+      {{celula.nome}}
+    </ion-item>
+  </ion-list>
+</ion-content>
