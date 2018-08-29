@@ -24,6 +24,8 @@ export class MyApp {
         configProvider.setConfigData(false);
       }else{
         this.rootPage = 'LoginPage';
+        //this.rootPage = 'HomePage';
+        //this.rootPage = 'AboutPage';
         //this.rootPage = 'CadastroCelulaPage';
       }
 

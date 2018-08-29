@@ -12,6 +12,7 @@ import { FIREBASE_CONFIG } from './firebase.credentials';
 import { CelulaService } from './../providers/celula/celula.service';
 import { Geolocation } from '@ionic-native/geolocation';
 import { EnderecoProvider } from '../providers/endereco/endereco';
+import { AuthService } from '../providers/auth/auth-service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { EnderecoProvider } from '../providers/endereco/endereco';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CelulaService,
     Geolocation,
-    EnderecoProvider
+    EnderecoProvider,
+    AuthService
   ]
 })
 export class AppModule {}

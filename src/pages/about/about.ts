@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
-
+import { IonicPage, NavParams } from 'ionic-angular';
 import { CelulaService } from '../../providers/celula/celula.service';
 import { Observable } from 'rxjs/Observable';
 import { Celula } from '../../model/celula/celula.model';
@@ -21,45 +20,49 @@ export class AboutPage {
   geocoder;
   celulaList: Observable<Celula[]>
 
-  constructor(private celulaService: CelulaService) {
+  constructor(private celulaService: CelulaService, public params: NavParams) {
     this.geocoder = new google.maps.Geocoder();
+    this.celulaList = params.data;
+    this.celulaList.subscribe(recent => {
+      this.marcarMapa(recent);
+    });
   }
 
   ionViewDidLoad() {
-    this.getFromFirebaseAsync()
-    .then(async (lista) => {
-      this.montarCelulas(lista).then((posicao) =>{
-        this.marcarMapa(posicao);
-      })
-    }) 
+    //this.getFromFirebaseAsync()
+    // .then(async (lista) => {
+    //   this.montarCelulas(lista).then((posicao) =>{
+    //     this.marcarMapa(posicao);
+    //   })
+    // }) 
   }
 
-  getFromFirebaseAsync(): Promise<any>{
-    return new Promise((resolve, reject) => {
-      this.celulaList = this.celulaService.getCelulaList()
-        .snapshotChanges()
-        .map(
-        changes => {
-          return changes.map(c => ({
-            key: c.payload.key, ...c.payload.val()
-          }))
-        });
-        if(this.celulaList != undefined){
-          this.celulaList.subscribe(lista => {
-            resolve(lista);
-          });  
-        }else{
-          reject('Erro ao tentar buscar celulas!');
-        }
-    });
-  }
+  // getFromFirebaseAsync(): Promise<any>{
+  //   return new Promise((resolve, reject) => {
+  //     this.celulaList = this.celulaService.getCelulaList()
+  //       .snapshotChanges()
+  //       .map(
+  //       changes => {
+  //         return changes.map(c => ({
+  //           key: c.payload.key, ...c.payload.val()
+  //         }))
+  //       });
+  //       if(this.celulaList != undefined){
+  //         this.celulaList.subscribe(lista => {
+  //           resolve(lista);
+  //         });  
+  //       }else{
+  //         reject('Erro ao tentar buscar celulas!');
+  //       }
+  //   });
+  // }
 
  marcarMapa(lista):Promise<any>{
     return new Promise((resolve,reject) => {
       let position = new google.maps.LatLng(-7.930114, -34.8562304);
 
       let mapOptions = {
-        zoom: 18,
+        zoom: 30,
         center: position,
         //disableDefaultUI: true
       }

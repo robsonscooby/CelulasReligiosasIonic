@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
+import { CelulaService } from '../../providers/celula/celula.service';
+import { Observable } from 'rxjs/Observable';
+import { Celula } from '../../model/celula/celula.model';
 
 @IonicPage()
 @Component({
@@ -11,6 +14,20 @@ export class TabsPage {
   tab2Root = 'AboutPage';
   tab3Root = 'ContactPage';
 
-  constructor() {}
+  celulaList: Observable<Celula[]>
+
+  constructor(private celulaService: CelulaService) {
+    this.getFromFirebaseAsync();
+  }
   
+  async getFromFirebaseAsync(){
+    this.celulaList = await this.celulaService.getCelulaList()
+    .snapshotChanges()
+    .map(
+    changes => {
+      return changes.map(c => ({
+        key: c.payload.key, ...c.payload.val()
+      }))
+    });
+  }
 }

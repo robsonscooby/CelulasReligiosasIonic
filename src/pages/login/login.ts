@@ -76,5 +76,8 @@ export class LoginPage {
     }
   }
 
+  resetPassword() {
+    this.navCtrl.push('ResetpasswordPage');
+  }
 
 }
