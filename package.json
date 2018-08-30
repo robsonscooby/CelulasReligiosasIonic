@@ -21,6 +21,7 @@
     "@angular/http": "5.2.10",
     "@angular/platform-browser": "5.2.10",
     "@angular/platform-browser-dynamic": "5.2.10",
+    "@google/maps": "^0.5.5",
     "@ionic-native/core": "^4.7.0",
     "@ionic-native/device": "^4.9.2",
     "@ionic-native/geolocation": "^4.7.0",
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.9",
+    "@types/googlemaps": "^3.30.12",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",

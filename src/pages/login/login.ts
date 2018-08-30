@@ -24,6 +24,8 @@ export class LoginPage {
         email: ['', Validators.required],
         password: ['', Validators.required]
       });
+      this.user.email = 'robsonscooby@gmail.com';
+      this.user.password = '48454845';
     }
  
   async login(user: User) {

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController, LoadingController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Celula } from '../../model/celula/celula.model';
-import { CelulaService } from '../../providers/celula/celula.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 @IonicPage()
@@ -15,11 +14,15 @@ export class HomePage {
   celulaList: Observable<Celula[]>
   loading  = this.loadingCtrl.create({
     spinner: 'ios',
-    content: 'Carregando todas as celulas de estudos biblicos.'
+    content: 'Carregando todas as celulas de estudos bíblicos.'
   });
 
-  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, private toast: ToastController,
-    public loadingCtrl: LoadingController, public params: NavParams) {
+  constructor(
+    private afAuth: AngularFireAuth, 
+    public navCtrl: NavController, 
+    private toast: ToastController,
+    public loadingCtrl: LoadingController, 
+    public params: NavParams) {
   
       this.celulaList = params.data;
   }
@@ -32,11 +35,6 @@ export class HomePage {
           message: `Bem vindo!, ${data.email}`,
           duration: 3000
         }).present();
-        
-        
-
-
-
       } else {
         this.toast.create({
           message: `Não foi possível se autenticação.`,
@@ -50,16 +48,4 @@ export class HomePage {
   openCadastroCelula() :void {
     this.navCtrl.push('CadastroCelulaPage');
   }
-
-  // async getFromFirebaseAsync(){
-  //   this.celulaList = await this.celulaService.getCelulaList()
-  //   .snapshotChanges()
-  //   .map(
-  //   changes => {
-  //     return changes.map(c => ({
-  //       key: c.payload.key, ...c.payload.val()
-  //     }))
-  //   });
-  //   this.navCtrl.push('CadastroCelulaPage');
-  // }
 }

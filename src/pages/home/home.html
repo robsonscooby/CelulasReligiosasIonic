@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Teste Celula
+      Nossas Celulas
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="openCadastroCelula()">
@@ -10,15 +10,32 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-
 <ion-content padding>
   <ion-list>
-    <ion-list-header>
-      Celulas
-    </ion-list-header>
-
-    <ion-item *ngFor="let celula of celulaList | async">
-      {{celula.nome}}
-    </ion-item>
+    <ion-item-sliding *ngFor="let celula of celulaList | async" #item>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/imgs/logo.png">
+        </ion-thumbnail>
+        <h2>{{celula.nome}}</h2>
+        <p>{{celula.descricao}}</p>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="secondary" (click)="more(item)">
+          <ion-icon name="menu"></ion-icon>
+          Mais
+        </button>
+        <button ion-button color="dark" (click)="mute(item)">
+          <ion-icon name="create"></ion-icon>
+          Editar
+        </button>
+      </ion-item-options>
+      <ion-item-options side="left">
+          <button ion-button color="danger" (click)="delete(item)">
+            <ion-icon name="trash"></ion-icon>
+            Delete
+          </button>
+        </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>

@@ -5,7 +5,8 @@ export class Celula {
     nome : string = null;
     site : string = null;
     telefone : string = null;
-    uid : string = null;
+    lat: string = null;
+    lng: string = null;
 
     constructor(values: Object = {}){
         Object.keys(this).forEach(key => {

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, AlertController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CelulaService } from '../../providers/celula/celula.service';
 import { Celula } from '../../model/celula/celula.model';
 import { EnderecoProvider } from '../../providers/endereco/endereco';
+import { MapService } from '../../providers/map/map.service';
 //import { UUID } from 'angular2-uuid';
 
 @IonicPage()
@@ -24,7 +25,12 @@ export class CadastroCelulaPage {
   cep = '';
   isenabled:boolean=false;
 
-  constructor(formBuilder: FormBuilder, private celulaService: CelulaService, private enderecoService: EnderecoProvider) {
+  constructor(formBuilder: FormBuilder, 
+    private celulaService: CelulaService, 
+    private enderecoService: EnderecoProvider,
+    private mapService: MapService,
+    private alertCtrl: AlertController) {
+
     this.cadForm = formBuilder.group({
       nome: ['', Validators.required],
       adress: ['', Validators.required],
@@ -35,7 +41,7 @@ export class CadastroCelulaPage {
     });
   }
 
-  validar(celula: Celula) {
+  async validar(celula: Celula) {
     let { nome, adress } = this.cadForm.controls;
  
     if (!this.cadForm.valid) {
@@ -53,7 +59,13 @@ export class CadastroCelulaPage {
         this.messageAdress = "";
       }
     } else {
-      //celula.uid = UUID.UUID();
+      const { lat, lng } = await this.mapService.loadCoordinates(`${celula.endereco}`);
+      if (!lat || !lng) {
+        return this.presentAlert();
+      }
+      //celula.id = UUID.UUID();
+      celula.lat = lat;
+      celula.lng = lng;
       this.celulaService.addCelula(celula);
     }
   }
@@ -67,6 +79,15 @@ export class CadastroCelulaPage {
       .catch((error: string) => {
         console.error('Erro ao tentar consultar cep.');
       });
+  }
+
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Alert',
+      subTitle: 'Não foi possível localizar coordenadas para o endereço.',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 }
