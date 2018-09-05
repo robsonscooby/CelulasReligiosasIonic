@@ -48,4 +48,8 @@ export class HomePage {
   openCadastroCelula() :void {
     this.navCtrl.push('CadastroCelulaPage');
   }
+
+  editCell(celula: Celula): void {
+    this.navCtrl.push('CadastroCelulaPage', celula);
+  }
 }

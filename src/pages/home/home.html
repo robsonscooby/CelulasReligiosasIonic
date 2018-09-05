@@ -4,7 +4,7 @@
       Nossas Celulas
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="openCadastroCelula()">
+      <button ion-button icon-only (click)="openCadastroCelula(edit)">
         <ion-icon name="md-add-circle"></ion-icon>
       </button>
     </ion-buttons>
@@ -25,7 +25,7 @@
           <ion-icon name="menu"></ion-icon>
           Mais
         </button>
-        <button ion-button color="dark" (click)="mute(item)">
+        <button ion-button color="dark" (click)="editCell(celula)">
           <ion-icon name="create"></ion-icon>
           Editar
         </button>
