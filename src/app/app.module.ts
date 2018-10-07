@@ -13,6 +13,8 @@ import { CelulaService } from './../providers/celula/celula.service';
 import { Geolocation } from '@ionic-native/geolocation';
 import { EnderecoProvider } from '../providers/endereco/endereco';
 import { AuthService } from '../providers/auth/auth-service';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { LoadingService } from '../providers/loading.service';
 
 @NgModule({
   declarations: [
@@ -22,8 +24,9 @@ import { AuthService } from '../providers/auth/auth-service';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
-    AngularFireDatabaseModule,
     AngularFireAuthModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
     HttpClientModule
   ],
   bootstrap: [IonicApp],
@@ -37,7 +40,8 @@ import { AuthService } from '../providers/auth/auth-service';
     CelulaService,
     Geolocation,
     EnderecoProvider,
-    AuthService
+    AuthService,
+    LoadingService
   ]
 })
 export class AppModule {}

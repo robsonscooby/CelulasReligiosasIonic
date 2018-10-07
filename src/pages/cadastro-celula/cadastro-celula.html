@@ -4,6 +4,26 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="primary-font">
+  
+
+  <div *ngIf="selectedFile.base64">
+    <img [src]="selectedFile.base64">
+    <div class="remove-img">
+      <button ion-button fill="clear" color="danger" (click)="selectedFile = { data: null, base64: null }">
+        Remover
+        <ion-icon slot="end" name="remove-circle-outline"></ion-icon>
+      </button>
+    </div>
+  </div> 
+  <div *ngIf="!selectedFile.base64">
+    <div class="img-input" (click)="inputFile.click()">
+      <ion-icon name="ios-images"></ion-icon>
+      <p>Adicionar Foto</p>
+    </div>
+    <input type="file" #inputFile class="inputfile" (change)="openFile($event)" />
+  </div>
+
+
   <form padding [formGroup]="cadForm" (submit)="validar(celula)">
     <ion-item>
       <ion-input [(ngModel)]="celula.nome" formControlName="nome" type="text" placeholder="Nome" clearInput clearOnEdit="false">
@@ -12,25 +32,23 @@
     <h6 *ngIf="errorName" class="error"> {{messageName}}</h6>
     <ion-row>
       <ion-col col-9>
-          <ion-input-mask [(ngModel)]="cep" formControlName="cep" type="text" placeholder="Cep" mask="99.999-999"
-          [clearIfNotMatch]="true"
-          [lastChild]="true"
-          [dropSpecialCharacters]="true">
-          </ion-input-mask>
+        <ion-input-mask [(ngModel)]="cep" formControlName="cep" type="text" placeholder="Cep" mask="99.999-999"
+          [clearIfNotMatch]="true" [lastChild]="true" [dropSpecialCharacters]="true">
+        </ion-input-mask>
       </ion-col>
       <ion-col col-3 class="button-padding">
-        <button ion-button [disabled]='cep == null || cep.length < 8' type="button" block outline (click)='getEndereco()' >
+        <button ion-button [disabled]='cep == null || cep.length < 8' type="button" block outline (click)='getEndereco()'>
           <ion-icon name="search"></ion-icon>
         </button>
       </ion-col>
     </ion-row>
     <ion-item>
-      <ion-input [(ngModel)]="celula.endereco" formControlName="adress" type="text" placeholder="Endereço" clearInput clearOnEdit="false">
+      <ion-input [(ngModel)]="celula.endereco" formControlName="adress" type="text" placeholder="Endereço" clearInput
+        clearOnEdit="false">
       </ion-input>
     </ion-item>
     <h6 *ngIf="errorAdress" class="error"> {{messageAdress}}</h6>
-      <ion-input-mask type="text" placeholder="Telefone" formControlName="tel" [(ngModel)]="celula.telefone"
-      mask="(99) 99999-9999"></ion-input-mask>
+    <ion-input-mask type="text" placeholder="Telefone" formControlName="tel" [(ngModel)]="celula.telefone" mask="(99) 99999-9999"></ion-input-mask>
     <ion-item>
       <ion-input type="text" placeholder="Site" formControlName="site" [(ngModel)]="celula.site"></ion-input>
     </ion-item>

@@ -23,10 +23,10 @@ export class MyApp {
         this.rootPage = 'SlidePage';
         configProvider.setConfigData(false);
       }else{
-        this.rootPage = 'LoginPage';
+        //this.rootPage = 'LoginPage';
         //this.rootPage = 'HomePage';
         //this.rootPage = 'AboutPage';
-        //this.rootPage = 'CadastroCelulaPage';
+        this.rootPage = 'CadastroCelulaPage';
       }
 
       statusBar.styleDefault();

@@ -18,10 +18,10 @@ export class CelulaService {
     }
 
     updateCelula(celula: Celula) {
-        return this.celulaListRef.update(celula.key, celula);
+        return this.celulaListRef.update(celula.id, celula);
     }
 
     removeCelula(celula: Celula) {
-        return this.celulaListRef.remove(celula.key);
+        return this.celulaListRef.remove(celula.id);
     }
 }
