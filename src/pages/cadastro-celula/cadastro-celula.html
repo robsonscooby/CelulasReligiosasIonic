@@ -4,17 +4,12 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="primary-font">
-  
-
-  <div *ngIf="selectedFile.base64">
+  <ion-grid *ngIf="selectedFile.base64">
     <img [src]="selectedFile.base64">
-    <div class="remove-img">
-      <button ion-button fill="clear" color="danger" (click)="selectedFile = { data: null, base64: null }">
-        Remover
-        <ion-icon slot="end" name="remove-circle-outline"></ion-icon>
+      <button ion-button icon-only  (click)="selectedFile = { data: null, base64: null }">
+        <ion-icon name="ios-trash"></ion-icon>
       </button>
-    </div>
-  </div> 
+  </ion-grid> 
   <div *ngIf="!selectedFile.base64">
     <div class="img-input" (click)="inputFile.click()">
       <ion-icon name="ios-images"></ion-icon>
@@ -22,8 +17,6 @@
     </div>
     <input type="file" #inputFile class="inputfile" (change)="openFile($event)" />
   </div>
-
-
   <form padding [formGroup]="cadForm" (submit)="validar(celula)">
     <ion-item>
       <ion-input [(ngModel)]="celula.nome" formControlName="nome" type="text" placeholder="Nome" clearInput clearOnEdit="false">
@@ -54,7 +47,7 @@
     </ion-item>
     <ion-item>
       <ion-label floating>Descrição</ion-label>
-      <ion-textarea class="textbox" formControlName="desc" [(ngModel)]="celula.descricao" rows="10" maxLength="250"></ion-textarea>
+      <ion-textarea formControlName="desc" [(ngModel)]="celula.descricao" rows="3" maxLength="250"></ion-textarea>
     </ion-item>
     <ion-buttons text-center>
       <button ion-button type="submit">Cadastrar</button>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, AlertController } from 'ionic-angular';
+import { IonicPage, AlertController, NavParams, NavController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CelulaService } from '../../providers/celula/celula.service';
 import { Celula } from '../../model/celula/celula.model';
@@ -29,8 +29,6 @@ export class CadastroCelulaPage {
   isenabled:boolean=false;
 
   private selectedFile: { data: any, base64: string } = { data: null, base64: null };
-  file: File;
-  teste: string = 'assets/imgs/logo.png';
 
   constructor(formBuilder: FormBuilder, 
     private celulaService: CelulaService, 
@@ -39,7 +37,15 @@ export class CadastroCelulaPage {
     private alertCtrl: AlertController,
     private sanitizer: DomSanitizer,
     private storage: AngularFireStorage,
-    public loading: LoadingService) {
+    public loading: LoadingService,
+    public navParams: NavParams,
+    public navCtrl: NavController) {
+
+    let cel = navParams.get('celula')  
+    if(cel){
+      this.celula = cel;
+      this.selectedFile.base64 = this.celula.thumbnailURL;
+    }
 
     this.cadForm = formBuilder.group({
       nome: ['', Validators.required],
@@ -73,17 +79,30 @@ export class CadastroCelulaPage {
       // if (!lat || !lng) {
       //   return this.presentAlert();
       // }
-      celula.id = UUID.UUID();
+     
       // celula.lat = lat;
       // celula.lng = lng;
-
-
 
       if (this.selectedFile) {
         await this.uploadFile();
       }
 
-      this.celulaService.addCelula(celula);
+      try {
+        await this.loading.present('Salvando...');
+        if(celula.id){
+          this.celulaService.save(celula);
+        }else{
+          celula.id = UUID.UUID();
+          this.celulaService.save(celula);
+        }
+
+        this.navCtrl.pop();
+        await this.loading.dismiss();
+      } catch (error) {
+        console.error(error);
+        await this.loading.dismiss();
+      }
+      
     }
   }
 
@@ -158,7 +177,7 @@ export class CadastroCelulaPage {
     try {
       await this.loading.present('Deletando...');
 
-      this.celulaService.removeCelula(this.celula);
+      this.celulaService.remove(this.celula.id);
       await this.deleteFile();
 
       this.clearFields();

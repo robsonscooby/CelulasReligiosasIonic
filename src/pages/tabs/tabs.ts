@@ -21,13 +21,6 @@ export class TabsPage {
   }
   
   async getFromFirebaseAsync(){
-    this.celulaList = await this.celulaService.getCelulaList()
-    .snapshotChanges()
-    .map(
-    changes => {
-      return changes.map(c => ({
-        key: c.payload.key, ...c.payload.val()
-      }))
-    });
+    this.celulaList = await this.celulaService.getAll();
   }
 }

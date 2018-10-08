@@ -3,6 +3,8 @@ import { IonicPage, NavController, ToastController, LoadingController, NavParams
 import { Observable } from 'rxjs/Observable';
 import { Celula } from '../../model/celula/celula.model';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { CelulaService } from '../../providers/celula/celula.service';
+import { LoadingService } from '../../providers/loading.service';
 
 @IonicPage()
 @Component({
@@ -22,7 +24,9 @@ export class HomePage {
     public navCtrl: NavController, 
     private toast: ToastController,
     public loadingCtrl: LoadingController, 
-    public params: NavParams) {
+    public params: NavParams,
+    private celulaService: CelulaService,
+    public loadingService: LoadingService ) {
   
       this.celulaList = params.data;
   }
@@ -50,6 +54,17 @@ export class HomePage {
   }
 
   editCell(celula: Celula): void {
-    this.navCtrl.push('CadastroCelulaPage', celula);
+    this.navCtrl.push('CadastroCelulaPage', {'celula' : celula});
+  }
+
+  async delete(celula: Celula) {
+    try {
+      await this.loadingService.present('Deletando...');
+      this.celulaService.remove(celula.id);
+      await this.loadingService.dismiss();
+    } catch (error) {
+      console.error(error);
+      await this.loadingService.dismiss();
+    } 
   }
 }
