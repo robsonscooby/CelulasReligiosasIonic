@@ -14,9 +14,9 @@
   <ion-list>
     <ion-item-sliding *ngFor="let celula of celulaList | async" #item>
       <ion-item>
-        <ion-thumbnail item-start>
+        <ion-avatar item-start>
           <img [src]="celula.thumbnailURL ? celula.thumbnailURL : 'assets/imgs/logo.png'">
-        </ion-thumbnail>
+        </ion-avatar>
         <h2>{{celula.nome}}</h2>
         <p>{{celula.descricao}}</p>
       </ion-item>
@@ -25,13 +25,13 @@
           <ion-icon name="menu"></ion-icon>
           Mais
         </button>
-        <button ion-button color="dark" (click)="editCell(celula)">
+        <button ion-button color="dark" (click)="editCell(item, celula)">
           <ion-icon name="create"></ion-icon>
           Editar
         </button>
       </ion-item-options>
       <ion-item-options side="left">
-          <button ion-button color="danger" (click)="delete(celula)">
+          <button ion-button color="danger" (click)="delete(item, celula)">
             <ion-icon name="trash"></ion-icon>
             Delete
           </button>

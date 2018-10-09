@@ -1,10 +1,9 @@
-<ion-header>
-  <ion-navbar color="primary">
-    <ion-title>Login</ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content padding>
+    <ion-card>
+        <ion-card-header>
+          LOGIN
+        </ion-card-header>
+        <ion-card-content>
   <form [formGroup]="loginForm" (submit)="validalogin(user)" novalidate>
     <ion-item>
       <ion-label floating>E-mail</ion-label>
@@ -26,4 +25,6 @@
   <button ion-button block clear (click)="resetPassword()">
     Esqueci minha senha
   </button>
+</ion-card-content>
+</ion-card>
 </ion-content>

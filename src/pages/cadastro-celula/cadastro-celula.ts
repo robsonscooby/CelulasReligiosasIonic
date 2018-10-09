@@ -176,10 +176,8 @@ export class CadastroCelulaPage {
 
     try {
       await this.loading.present('Deletando...');
-
-      this.celulaService.remove(this.celula.id);
       await this.deleteFile();
-
+      this.celulaService.remove(this.celula.id);
       this.clearFields();
       await this.loading.dismiss();
     } catch (error) {
@@ -190,7 +188,7 @@ export class CadastroCelulaPage {
 
   async deleteFile(): Promise<void> {
     try {
-      const filePath = `posts/${this.celula.thumbnailId}`;
+      const filePath = `celulas/${this.celula.thumbnailId}`;
       const fileRef = this.storage.ref(filePath);
       await fileRef.delete().toPromise();
     } catch (error) {
