@@ -1,5 +1,5 @@
 export class Celula {
-    id?: string;
+    key?: string;
     descricao : string = null;
     endereco : string = null;
     nome : string = null;

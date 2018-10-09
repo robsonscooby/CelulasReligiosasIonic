@@ -6,7 +6,6 @@ import { Celula } from '../../model/celula/celula.model';
 import { EnderecoProvider } from '../../providers/endereco/endereco';
 import { MapService } from '../../providers/map/map.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { UUID } from 'angular2-uuid';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { LoadingService } from '../../providers/loading.service';
 
@@ -75,13 +74,15 @@ export class CadastroCelulaPage {
         this.messageAdress = "";
       }
     } else {
-      // const { lat, lng } = await this.mapService.loadCoordinates(`${celula.endereco}`);
-      // if (!lat || !lng) {
-      //   return this.presentAlert();
-      // }
+      this.isenabled = true;
+      const { lat, lng } = await this.mapService.loadCoordinates(`${celula.endereco}`);
+      if (!lat || !lng) {
+        this.isenabled = false;
+        return this.presentAlert();
+      }
      
-      // celula.lat = lat;
-      // celula.lng = lng;
+      celula.lat = lat;
+      celula.lng = lng;
 
       if (this.selectedFile) {
         await this.uploadFile();
@@ -89,17 +90,12 @@ export class CadastroCelulaPage {
 
       try {
         await this.loading.present('Salvando...');
-        if(celula.id){
-          this.celulaService.save(celula);
-        }else{
-          celula.id = UUID.UUID();
-          this.celulaService.save(celula);
-        }
-
+        this.celulaService.save(celula);
         this.navCtrl.pop();
         await this.loading.dismiss();
       } catch (error) {
         console.error(error);
+        this.isenabled = false;
         await this.loading.dismiss();
       }
       
@@ -170,14 +166,14 @@ export class CadastroCelulaPage {
   }
 
   async deleteCelula(): Promise<void> {
-    if (!this.celula.id) {
+    if (!this.celula.key) {
       return Promise.reject('Nenhuma Celula selecionada.');
     }
 
     try {
       await this.loading.present('Deletando...');
       await this.deleteFile();
-      this.celulaService.remove(this.celula.id);
+      this.celulaService.remove(this.celula.key);
       this.clearFields();
       await this.loading.dismiss();
     } catch (error) {

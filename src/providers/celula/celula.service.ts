@@ -5,7 +5,7 @@ import { Celula } from './../../model/celula/celula.model';
 @Injectable()
 export class CelulaService {
 
-  private PATH = 'Celula/';
+  private PATH = 'Celulas/';
 
   constructor(private db: AngularFireDatabase) {
   }
@@ -19,7 +19,7 @@ export class CelulaService {
   }
 
   get(celula: Celula) {
-    return this.db.object(this.PATH + celula.id).snapshotChanges()
+    return this.db.object(this.PATH + celula.key).snapshotChanges()
       .map(c => {
         return { key: c.key, ...c.payload.val() };
       });
@@ -27,17 +27,9 @@ export class CelulaService {
 
   save(celula: Celula) {
     return new Promise((resolve, reject) => {
-      if (celula.id) {
+      if (celula.key) {
         this.db.list(this.PATH)
-          .update(celula.id, {nome: celula.nome,
-            descricao: celula.descricao,
-            endereco: celula.endereco,
-            //site: celula.site,
-            telefone: celula.telefone,
-            //lat: celula.lat,
-            //lng: celula.lng,
-            thumbnailId: celula.thumbnailId,
-            thumbnailURL: celula.thumbnailURL})
+          .update(celula.key, celula)
           .then(() => resolve())
           .catch((e) => reject(e));
       } else {

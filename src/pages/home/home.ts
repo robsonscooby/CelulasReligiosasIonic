@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ToastController, LoadingController, NavParams, ItemSliding } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, LoadingController, NavParams, ItemSliding, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Celula } from '../../model/celula/celula.model';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -28,7 +28,8 @@ export class HomePage {
     public params: NavParams,
     private celulaService: CelulaService,
     public loadingService: LoadingService,
-    private storage: AngularFireStorage) {
+    private storage: AngularFireStorage,
+    private alertCtrl: AlertController) {
   
       this.celulaList = params.data;
   }
@@ -65,7 +66,7 @@ export class HomePage {
       await this.loadingService.present('Deletando...');
       item.close();
       this.deleteFile(celula);
-      this.celulaService.remove(celula.id);
+      this.celulaService.remove(celula.key);
       await this.loadingService.dismiss();
     } catch (error) {
       console.error(error);
@@ -85,5 +86,25 @@ export class HomePage {
 
   more(item: ItemSliding) :void {
     item.close();
+  }
+
+  async presentAlertConfirmation(item: ItemSliding, celula: Celula): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      title: 'Deseja excluir Celula?',
+      message: celula.nome,
+      buttons: [
+        {
+          text: 'Não'
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+            this.delete(item, celula);
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
   }
 }

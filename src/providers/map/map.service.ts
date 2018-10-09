@@ -39,8 +39,8 @@ export class MapService {
     this.markers.push(marker);
   }
 
-  loadCoordinates(address: string): Promise<{ lat: string, lng: string }> {
-    return this.httpClient.get(`http://maps.googleapis.com/maps/api/geocode/json?address=${address}`)
+  loadCoordinates(address: string): Promise<{ lat: string, lng: string }> {  
+    return this.httpClient.get(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCC6kAHTODc2czcEJ4uKOO2JgNXI8uALfA&address=${address}&sensor=true`)
       .toPromise()
       .then((data: any) => {
         if (!data.results.length) {

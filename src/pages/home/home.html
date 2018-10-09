@@ -10,7 +10,7 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content no-padding>
   <ion-list>
     <ion-item-sliding *ngFor="let celula of celulaList | async" #item>
       <ion-item>
@@ -31,7 +31,7 @@
         </button>
       </ion-item-options>
       <ion-item-options side="left">
-          <button ion-button color="danger" (click)="delete(item, celula)">
+          <button ion-button color="danger" (click)="presentAlertConfirmation(item, celula)">
             <ion-icon name="trash"></ion-icon>
             Delete
           </button>
