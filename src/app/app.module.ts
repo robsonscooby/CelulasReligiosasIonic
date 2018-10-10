@@ -15,6 +15,7 @@ import { EnderecoProvider } from '../providers/endereco/endereco';
 import { AuthService } from '../providers/auth/auth-service';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { LoadingService } from '../providers/loading.service';
+import { FirebaseMessagingProvider } from '../providers/firebase-messaging';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { LoadingService } from '../providers/loading.service';
     Geolocation,
     EnderecoProvider,
     AuthService,
-    LoadingService
+    LoadingService,
+    FirebaseMessagingProvider
   ]
 })
 export class AppModule {}
