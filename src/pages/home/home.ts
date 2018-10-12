@@ -6,6 +6,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { CelulaService } from '../../providers/celula/celula.service';
 import { LoadingService } from '../../providers/loading.service';
 import { AngularFireStorage } from 'angularfire2/storage';
+import { FirebaseMessagingProvider } from '../../providers/firebase-messaging';
 
 @IonicPage()
 @Component({
@@ -29,7 +30,8 @@ export class HomePage {
     private celulaService: CelulaService,
     public loadingService: LoadingService,
     private storage: AngularFireStorage,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    public fireMessege: FirebaseMessagingProvider) {
   
       this.celulaList = params.data;
   }

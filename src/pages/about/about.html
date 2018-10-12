@@ -2,6 +2,10 @@
   <ion-navbar>
     <ion-title>Google maps</ion-title>
   </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="queryText" (ionChange)="updateSchedule()" placeholder="Search">
+    </ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>

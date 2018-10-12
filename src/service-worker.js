@@ -45,6 +45,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
   console.log('Received background message ', payload);
   // here you can override some options describing what's in the message; 
   // however, the actual content will come from the Webtask
+  const notificationTitle = 'Background Message Title';
   const notificationOptions = {
     icon: '/assets/imgs/logo.png'
   };

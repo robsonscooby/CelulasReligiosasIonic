@@ -16,6 +16,8 @@ import { AuthService } from '../providers/auth/auth-service';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { LoadingService } from '../providers/loading.service';
 import { FirebaseMessagingProvider } from '../providers/firebase-messaging';
+import 'firebase/messaging';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { FirebaseMessagingProvider } from '../providers/firebase-messaging';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    IonicStorageModule.forRoot(),
     AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,

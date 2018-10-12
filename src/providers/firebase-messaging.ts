@@ -10,7 +10,7 @@ export class FirebaseMessagingProvider {
 
     constructor(
         private storage: Storage,
-        private app: FirebaseApp
+        public app: FirebaseApp
     ) {
         this.messaging = app.messaging();
         navigator.serviceWorker.register('service-worker.js').then((registration) => {
