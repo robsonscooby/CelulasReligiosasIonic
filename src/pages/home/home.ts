@@ -15,6 +15,7 @@ import { FirebaseMessagingProvider } from '../../providers/firebase-messaging';
 })
 export class HomePage {
 
+  bkList: Observable<Celula[]>
   celulaList: Observable<Celula[]>
   loading  = this.loadingCtrl.create({
     spinner: 'ios',
@@ -34,6 +35,7 @@ export class HomePage {
     public fireMessege: FirebaseMessagingProvider) {
   
       this.celulaList = params.data;
+      this.bkList = this.celulaList;
   }
 
   ionViewWillLoad() {
@@ -108,5 +110,13 @@ export class HomePage {
     });
   
     await alert.present();
+  }
+
+  filterItems(ev: any) {
+    this.celulaList = this.bkList;
+    let val = ev.target.value;
+    return this.celulaList = this.celulaList.map(cel => cel.filter((c) => 
+      c.nome.toLowerCase().includes(val.toLowerCase())
+    ));
   }
 }
