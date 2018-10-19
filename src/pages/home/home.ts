@@ -88,8 +88,10 @@ export class HomePage {
     }
   }
 
-  more(item: ItemSliding) :void {
+  more(item: ItemSliding, celula: Celula) :void {
+    console.log('teste');
     item.close();
+    this.navCtrl.push('DetailPage', {'celula' : celula});
   }
 
   async presentAlertConfirmation(item: ItemSliding, celula: Celula): Promise<void> {
