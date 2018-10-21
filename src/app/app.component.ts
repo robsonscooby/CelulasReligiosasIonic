@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import * as firebase from 'firebase';
+import { FIREBASE_CONFIG } from './firebase.credentials';
 
 @Component({
   templateUrl: 'app.html',
@@ -24,6 +26,7 @@ export class MyApp {
         configProvider.setConfigData(false);
       }else{
         this.rootPage = 'LoginPage';
+        //this.rootPage = 'ChatPage';
         //this.rootPage = 'HomePage';
         //this.rootPage = 'AboutPage';
         //this.rootPage = 'CadastroCelulaPage';
@@ -32,5 +35,6 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+    firebase.initializeApp(FIREBASE_CONFIG);
   }
 }
