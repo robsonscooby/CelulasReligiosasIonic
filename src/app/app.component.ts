@@ -28,7 +28,7 @@ export class MyApp {
         this.rootPage = 'LoginPage';
         //this.rootPage = 'ChatPage';
         //this.rootPage = 'HomePage';
-        //this.rootPage = 'AboutPage';
+        //this.rootPage = 'MapaPage';
         //this.rootPage = 'CadastroCelulaPage';
       }
 

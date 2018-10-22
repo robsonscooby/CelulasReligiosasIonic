@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AboutPage } from './about';
+import { MapaPage } from './mapa';
 import { MapService } from '../../providers/map/map.service';
 
 
 @NgModule({
   declarations: [
-    AboutPage,
+    MapaPage,
   ],
   imports: [
-    IonicPageModule.forChild(AboutPage),
+    IonicPageModule.forChild(MapaPage),
   ],
   providers: [
     MapService,

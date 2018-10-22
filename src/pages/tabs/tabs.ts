@@ -11,7 +11,7 @@ import { Celula } from '../../model/celula/celula.model';
 export class TabsPage {
 
   tab1Root = 'HomePage';
-  tab2Root = 'AboutPage';
+  tab2Root = 'MapaPage';
   tab3Root = 'ContactPage';
   tab4Root = 'ChatPage';
 

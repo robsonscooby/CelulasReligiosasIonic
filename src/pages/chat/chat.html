@@ -58,16 +58,15 @@
       </ion-item>
     </ion-list>
 </ion-content>
-
-<ion-footer *ngIf="chatManagement == 'chat'">
-    <ion-grid>
-      <ion-row>
-        <ion-col col-10>
-          <ion-input type="text" placeholder="Type a message" [(ngModel)]="data.message" name="message"></ion-input>
-        </ion-col>
-        <ion-col col-2 (click)="sendMessage()">
-          <ion-icon name="paper-plane"></ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-footer>
+<ion-footer>
+  <ion-grid *ngIf="chatManagement == 'chat'">
+    <ion-row>
+      <ion-col col-10>
+        <ion-input type="text" placeholder="Type a message" [(ngModel)]="data.message" name="message"></ion-input>
+      </ion-col>
+      <ion-col col-2 (click)="sendMessage()">
+        <ion-icon name="paper-plane"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

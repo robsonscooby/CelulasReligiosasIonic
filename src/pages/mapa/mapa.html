@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Google maps</ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-item>
+      <ion-label floating>Selecione Celula</ion-label>
+      <ion-select (ionChange)="selectCelula()" [(ngModel)]="celula.nome">
+          <ion-option *ngFor="let cel of celulaList | async" value="{{cel.nome}}">{{cel.nome}}</ion-option>
+      </ion-select>
+  </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div #map id="map"></div>
+</ion-content>

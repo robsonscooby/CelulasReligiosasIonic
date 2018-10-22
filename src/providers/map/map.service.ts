@@ -18,7 +18,7 @@ export class MapService {
     const latLng = new google.maps.LatLng(lat, lng);
     const mapOptions = {
       center: latLng,
-      zoom: 13,
+      zoom: 10,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     this.map = new google.maps.Map(mapElement.nativeElement, mapOptions);
@@ -37,6 +37,20 @@ export class MapService {
       this.infowindow.open(this.map, marker);
     });
     this.markers.push(marker);
+  }
+
+  setLocation(celula: Celula): void {
+    const marker = this.markers.find(element => {
+      const markerPosition = element.getPosition();
+      const selectedPosition = new google.maps.LatLng(celula.lat, celula.lng);
+      return markerPosition.lat() === selectedPosition.lat() && markerPosition.lng() === selectedPosition.lng();
+    });
+
+    this.map.setCenter(marker.getPosition());
+    this.map.setZoom(10);
+
+    this.infowindow.setContent(celula.nome);
+    this.infowindow.open(this.map, marker);
   }
 
   loadCoordinates(address: string): Promise<{ lat: string, lng: string }> {  
