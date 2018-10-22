@@ -11,7 +11,7 @@ export class CelulaService {
   }
 
   getAll() {
-    return this.db.list(this.PATH, ref => ref.orderByChild('name'))
+    return this.db.list(this.PATH, ref => ref.orderByChild('nome'))
       .snapshotChanges()
       .map(changes => {
         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));

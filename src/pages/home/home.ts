@@ -7,6 +7,8 @@ import { CelulaService } from '../../providers/celula/celula.service';
 import { LoadingService } from '../../providers/loading.service';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { FirebaseMessagingProvider } from '../../providers/firebase-messaging';
+import * as firebase from 'Firebase';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
@@ -32,7 +34,8 @@ export class HomePage {
     public loadingService: LoadingService,
     private storage: AngularFireStorage,
     private alertCtrl: AlertController,
-    public fireMessege: FirebaseMessagingProvider) {
+    public fireMessege: FirebaseMessagingProvider,
+    private db: AngularFireDatabase) {
   
       this.celulaList = params.data;
       this.bkList = this.celulaList;
@@ -71,6 +74,8 @@ export class HomePage {
       item.close();
       this.deleteFile(celula);
       this.celulaService.remove(celula.key);
+      console.log('remover sala');
+      await this.removeRoom(celula.nome);
       await this.loadingService.dismiss();
     } catch (error) {
       console.error(error);
@@ -88,8 +93,22 @@ export class HomePage {
     }
   }
 
+  async removeRoom(nome): Promise<void> {
+    let rooms = [];
+    let ref = await firebase.database().ref('chatrooms/');
+    ref.on('value', resp => {
+      rooms = snapshotToArray(resp);
+    });
+
+    rooms.filter(async sala => {
+      if(sala.roomname == nome){
+        this.db.list('chatrooms/').remove(sala.key);
+      }
+    });
+    
+  }
+
   more(item: ItemSliding, celula: Celula) :void {
-    console.log('teste');
     item.close();
     this.navCtrl.push('DetailPage', {'celula' : celula});
   }
@@ -122,3 +141,15 @@ export class HomePage {
     ));
   }
 }
+
+export const snapshotToArray = snapshot => {
+  let returnArr = [];
+
+  snapshot.forEach(childSnapshot => {
+      let item = childSnapshot.val();
+      item.key = childSnapshot.key;
+      returnArr.push(item);
+  });
+
+  return returnArr;
+};

@@ -8,6 +8,7 @@ import { MapService } from '../../providers/map/map.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { LoadingService } from '../../providers/loading.service';
+import * as firebase from 'Firebase';
 
 @IonicPage()
 @Component({
@@ -25,12 +26,12 @@ export class CadastroCelulaPage {
   celula: Celula = new Celula();
   enderecoCep: any[];
   cep = '';
-  isenabled:boolean=false;
+  isenabled: boolean = false;
 
   private selectedFile: { data: any, base64: string } = { data: null, base64: null };
 
-  constructor(formBuilder: FormBuilder, 
-    private celulaService: CelulaService, 
+  constructor(formBuilder: FormBuilder,
+    private celulaService: CelulaService,
     private enderecoService: EnderecoProvider,
     private mapService: MapService,
     private alertCtrl: AlertController,
@@ -40,8 +41,8 @@ export class CadastroCelulaPage {
     public navParams: NavParams,
     public navCtrl: NavController) {
 
-    let cel = navParams.get('celula')  
-    if(cel){
+    let cel = navParams.get('celula')
+    if (cel) {
       this.celula = cel;
       this.selectedFile.base64 = this.celula.thumbnailURL;
     }
@@ -50,15 +51,48 @@ export class CadastroCelulaPage {
       nome: ['', Validators.required],
       adress: ['', Validators.required],
       cep: '',
-      tel: '', 
-      site: '', 
-      desc: ''  
+      tel: '',
+      site: '',
+      desc: ''
     });
   }
 
-  async validar(celula: Celula) {
+  async salvar(celula: Celula) {
+
+    if (this.validaCampos()) {
+      return;
+    }
+
+    this.isenabled = true;
+    const { lat, lng } = await this.mapService.loadCoordinates(`${celula.endereco}`);
+    if (!lat || !lng) {
+      this.isenabled = false;
+      return this.presentAlert();
+    }
+
+    celula.lat = lat;
+    celula.lng = lng;
+
+    if (this.selectedFile) {
+      await this.uploadFile();
+    }
+
+    try {
+      await this.loading.present('Salvando...');
+      this.celulaService.save(celula);
+      this.addRoom(celula.nome);
+      this.navCtrl.pop();
+      await this.loading.dismiss();
+    } catch (error) {
+      console.error(error);
+      this.isenabled = false;
+      await this.loading.dismiss();
+    }
+  }
+
+  validaCampos(): boolean {
     let { nome, adress } = this.cadForm.controls;
- 
+
     if (!this.cadForm.valid) {
       if (!nome.valid) {
         this.errorName = true;
@@ -66,39 +100,16 @@ export class CadastroCelulaPage {
       } else {
         this.messageName = "";
       }
- 
+
       if (!adress.valid) {
         this.errorAdress = true;
-        this.messageAdress ="Endereço obrigatótio"
+        this.messageAdress = "Endereço obrigatótio"
       } else {
         this.messageAdress = "";
       }
+      return true;
     } else {
-      this.isenabled = true;
-      const { lat, lng } = await this.mapService.loadCoordinates(`${celula.endereco}`);
-      if (!lat || !lng) {
-        this.isenabled = false;
-        return this.presentAlert();
-      }
-     
-      celula.lat = lat;
-      celula.lng = lng;
-
-      if (this.selectedFile) {
-        await this.uploadFile();
-      }
-
-      try {
-        await this.loading.present('Salvando...');
-        this.celulaService.save(celula);
-        this.navCtrl.pop();
-        await this.loading.dismiss();
-      } catch (error) {
-        console.error(error);
-        this.isenabled = false;
-        await this.loading.dismiss();
-      }
-      
+      return false;
     }
   }
 
@@ -195,6 +206,14 @@ export class CadastroCelulaPage {
   clearFields(): void {
     this.selectedFile = { data: null, base64: null };
     this.celula = new Celula();
+  }
+
+  addRoom(name): void {
+    let ref = firebase.database().ref('chatrooms/');
+    let newData = ref.push();
+    newData.set({
+      roomname: name
+    });
   }
 
 }

@@ -18,7 +18,7 @@
       </div>
       <input type="file" #inputFile class="inputfile" (change)="openFile($event)" />
     </div>
-    <form padding [formGroup]="cadForm" (submit)="validar(celula)">
+    <form padding [formGroup]="cadForm" (submit)="salvar(celula)">
       <ion-item>
         <ion-input [(ngModel)]="celula.nome" formControlName="nome" type="text" placeholder="Nome" clearInput
           clearOnEdit="false">
