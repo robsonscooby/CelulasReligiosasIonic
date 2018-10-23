@@ -3,7 +3,6 @@ import { IonicPage, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Celula } from '../../model/celula/celula.model';
 import { MapService } from '../../providers/map/map.service';
-import { filter } from 'rxjs/operator/filter';
 
 @IonicPage()
 @Component({
@@ -19,7 +18,9 @@ export class MapaPage {
   constructor(public params: NavParams, private mapService: MapService) {
     this.celulaList = params.data;
     this.celulaList.subscribe(celulas => {
-      this.mapService.loadMap(this.mapElement, celulas[0].lat, celulas[0].lng);
+      if(celulas.length > 0){
+        this.mapService.loadMap(this.mapElement, celulas[0].lat, celulas[0].lng);
+      }
       celulas.map(element => this.mapService.setMarker(element));
     });
   } 

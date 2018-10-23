@@ -3,7 +3,7 @@
     <ion-title>Cadastrar Celula</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding class="primary-font">
+<ion-content no-padding>
   <ion-grid col-12 col-md-4>
     <ion-grid *ngIf="selectedFile.base64">
       <img [src]="selectedFile.base64">
@@ -18,7 +18,7 @@
       </div>
       <input type="file" #inputFile class="inputfile" (change)="openFile($event)" />
     </div>
-    <form padding [formGroup]="cadForm" (submit)="salvar(celula)">
+    <form no-padding [formGroup]="cadForm" (submit)="salvar(celula)">
       <ion-item>
         <ion-input [(ngModel)]="celula.nome" formControlName="nome" type="text" placeholder="Nome" clearInput
           clearOnEdit="false">

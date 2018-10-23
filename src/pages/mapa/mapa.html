@@ -13,5 +13,13 @@
 </ion-header>
 
 <ion-content padding>
-  <div #map id="map"></div>
+  <div #map id="map" *ngIf="(celulaList | async) != 0"></div>
+  <ion-grid style="height: 100%" *ngIf="(celulaList | async) == 0">
+      <ion-row ion-row justify-content-center align-items-center style="height: 100%">
+        <div text-center>
+          <ion-icon size="large" name="md-thumbs-down" color="medium"></ion-icon>
+          <ion-label no-margin color="medium">Lista de Celulas vazia.</ion-label>
+        </div>
+      </ion-row>
+    </ion-grid>
 </ion-content>

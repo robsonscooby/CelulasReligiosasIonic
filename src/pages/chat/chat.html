@@ -8,65 +8,74 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content padding class="bg-style">
-    <ion-list *ngIf="chatManagement == 'createRoom'">
+<ion-content no-padding class="bg-style">
+  <ion-grid style="height: 100%">
+    <ion-row justify-content-center align-items-center style="height: 100%" *ngIf="chatManagement == 'name'">
+      <ion-col>
         <ion-item>
-          <ion-label floating>Criar Sala</ion-label>
-          <ion-input type="text" [(ngModel)]="data.roomname" name="roomname" required=""></ion-input>
+          <ion-label floating>Digite seu nome</ion-label>
+          <ion-input type="text" [(ngModel)]="data.nickname" name="nickname" required=""></ion-input>
         </ion-item>
-        <ion-item>
-          <button ion-button full round (click)="addRoom()">Criar</button>
-        </ion-item>
-      </ion-list>
-  <ion-list *ngIf="chatManagement == 'name'">
-    <ion-item>
-      <ion-label floating>Digite seu nome</ion-label>
-      <ion-input type="text" [(ngModel)]="data.nickname" name="nickname" required=""></ion-input>
-    </ion-item>
-    <ion-item>
-      <button ion-button full round (click)="enterNickname()">Enter</button>
-    </ion-item>
-  </ion-list>
-  <ion-list *ngIf="chatManagement == 'room'">
-    <ion-item *ngFor="let room of rooms">
-      {{room.roomname}}
-      <ion-icon name="chatboxes" item-end (click)="joinRoom(room.key)"></ion-icon>
-    </ion-item>
-  </ion-list>
-  <ion-list *ngIf="chatManagement == 'chat'">
-      <ion-item *ngFor="let chat of chats" no-lines>
-        <div class="chat-status" text-center *ngIf="chat.type==='join'||chat.type==='exit';else message">
-          <span class="chat-date">{{chat.sendDate | date:'short'}}</span>
-          <span class="chat-content-center">{{chat.message}}</span>
-        </div>
-        <ng-template #message>
-          <div class="chat-message" text-right *ngIf="chat.user === nickname">
-            <div class="right-bubble">
-              <span class="msg-name">Me</span>
-              <span class="msg-date">{{chat.sendDate | date:'short'}}</span>
-              <p text-wrap>{{chat.message}}</p>
-            </div>
-          </div>
-          <div class="chat-message" text-left *ngIf="chat.user !== nickname">
-            <div class="left-bubble">
-              <span class="msg-name">{{chat.user}}</span>
-              <span class="msg-date">{{chat.sendDate | date:'short'}}</span>
-              <p text-wrap>{{chat.message}}</p>
-            </div>
-          </div>
-        </ng-template>
-      </ion-item>
-    </ion-list>
-</ion-content>
-<ion-footer>
-  <ion-grid *ngIf="chatManagement == 'chat'">
-    <ion-row>
-      <ion-col col-10>
-        <ion-input type="text" placeholder="Type a message" [(ngModel)]="data.message" name="message"></ion-input>
-      </ion-col>
-      <ion-col col-2 (click)="sendMessage()">
-        <ion-icon name="paper-plane"></ion-icon>
+        <button ion-button full round (click)="enterNickname()">Enter</button>
       </ion-col>
     </ion-row>
+    <ion-row justify-content-center align-items-center style="height: 100%" *ngIf="chatManagement == 'room' && rooms.length == 0">
+      <ion-col>
+        <div text-center>
+          <ion-icon size="large" name="md-thumbs-down" color="medium"></ion-icon>
+          <ion-label no-margin color="medium">Lista de salas vazia.</ion-label>
+        </div>
+        <ion-row *ngFor="let room of rooms" (click)="joinRoom(room.key)">
+          {{room.roomname}}
+          <ion-icon name="chatboxes" item-end></ion-icon>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row style="height: 100%" *ngIf="chatManagement == 'room' && rooms.length != 0">
+      <ion-col>
+        <ion-row *ngFor="let room of rooms" (click)="joinRoom(room.key)">
+          <ion-item>
+            {{room.roomname}}
+            <ion-icon name="chatboxes" item-end></ion-icon>
+          </ion-item>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="chatManagement == 'chat'">
+      <ion-list>
+        <ion-item no-padding *ngFor="let chat of chats" no-lines>
+          <div class="chat-status" text-center *ngIf="chat.type==='join'||chat.type==='exit';else message">
+            <span class="chat-date">{{chat.sendDate | date:'short'}}</span>
+            <span class="chat-content-center">{{chat.message}}</span>
+          </div>
+          <ng-template #message>
+            <div class="chat-message" text-right *ngIf="chat.user === nickname">
+              <div class="right-bubble">
+                <span class="msg-name">Me</span>
+                <span class="msg-date">{{chat.sendDate | date:'short'}}</span>
+                <p text-wrap>{{chat.message}}</p>
+              </div>
+            </div>
+            <div class="chat-message" text-left *ngIf="chat.user !== nickname">
+              <div class="left-bubble">
+                <span class="msg-name">{{chat.user}}</span>
+                <span class="msg-date">{{chat.sendDate | date:'short'}}</span>
+                <p text-wrap>{{chat.message}}</p>
+              </div>
+            </div>
+          </ng-template>
+        </ion-item>
+      </ion-list>
+    </div>
   </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-row *ngIf="chatManagement == 'chat'">
+    <ion-col col-10>
+      <ion-input type="text" placeholder="Type a message" [(ngModel)]="data.message" name="message"></ion-input>
+    </ion-col>
+    <ion-col col-2 text-end (click)="sendMessage()">
+      <ion-icon padding-right name="paper-plane"></ion-icon>
+    </ion-col>
+  </ion-row>
 </ion-footer>

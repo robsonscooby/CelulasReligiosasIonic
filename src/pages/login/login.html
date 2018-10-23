@@ -1,30 +1,32 @@
 <ion-content padding>
-    <ion-card>
-        <ion-card-header>
-          LOGIN
-        </ion-card-header>
-        <ion-card-content>
-  <form [formGroup]="loginForm" (submit)="validalogin(user)" novalidate>
-    <ion-item>
-      <ion-label floating>E-mail</ion-label>
-      <ion-input [(ngModel)]="user.email" formControlName="email" type="text" placeholder="E-mail" clearInput clearOnEdit="false">
-      </ion-input>
-    </ion-item>
-    <ion-label *ngIf="errorEmail" class="error"> {{messageEmail}}</ion-label>
-    <ion-item>
-      <ion-label floating>Senha</ion-label>
-      <ion-input [(ngModel)]="user.password" formControlName="password" type="password" placeholder="Senha" clearInput clearOnEdit="false">
-      </ion-input>
-    </ion-item>
-    <ion-label *ngIf="errorPassword" class="error"> {{messagePassword}}</ion-label>
-    <ion-buttons text-center>
-      <button ion-button type="submit">Entrar</button>
-      <button ion-button color="light" type="button" (click)="register()">Registrar</button>
-    </ion-buttons>
-  </form>
-  <button ion-button block clear (click)="resetPassword()">
-    Esqueci minha senha
-  </button>
-</ion-card-content>
-</ion-card>
+  <ion-card>
+    <ion-card-header>
+      LOGIN
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="loginForm" (submit)="validalogin(user)" novalidate>
+        <ion-item>
+          <ion-label floating>E-mail</ion-label>
+          <ion-input [(ngModel)]="user.email" formControlName="email" type="text" placeholder="E-mail" clearInput
+            clearOnEdit="false">
+          </ion-input>
+        </ion-item>
+        <ion-label *ngIf="errorEmail" class="error"> {{messageEmail}}</ion-label>
+        <ion-item>
+          <ion-label floating>Senha</ion-label>
+          <ion-input [(ngModel)]="user.password" formControlName="password" type="password" placeholder="Senha"
+            clearInput clearOnEdit="false">
+          </ion-input>
+        </ion-item>
+        <ion-label *ngIf="errorPassword" class="error"> {{messagePassword}}</ion-label>
+        <ion-buttons text-center>
+          <button ion-button type="submit">Entrar</button>
+          <button ion-button color="light" type="button" (click)="register()">Registrar</button>
+        </ion-buttons>
+      </form>
+      <button ion-button block clear (click)="resetPassword()">
+        Esqueci minha senha
+      </button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

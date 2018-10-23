@@ -15,6 +15,14 @@
   </ion-toolbar>
 </ion-header>
 <ion-content no-padding>
+  <ion-grid style="height: 100%" *ngIf="(celulaList | async) == 0">
+    <ion-row ion-row justify-content-center align-items-center style="height: 100%">
+      <div text-center>
+        <ion-icon size="large" name="md-thumbs-down" color="medium"></ion-icon>
+        <ion-label no-margin color="medium">Lista de Celulas vazia.</ion-label>
+      </div>
+    </ion-row>
+  </ion-grid>
   <ion-list>
     <ion-item-sliding *ngFor="let celula of celulaList | async" #item>
       <ion-item>
@@ -35,11 +43,11 @@
         </button>
       </ion-item-options>
       <ion-item-options side="left">
-          <button ion-button color="danger" (click)="presentAlertConfirmation(item, celula)">
-            <ion-icon name="trash"></ion-icon>
-            Delete
-          </button>
-        </ion-item-options>
+        <button ion-button color="danger" (click)="presentAlertConfirmation(item, celula)">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
     </ion-item-sliding>
   </ion-list>
 </ion-content>

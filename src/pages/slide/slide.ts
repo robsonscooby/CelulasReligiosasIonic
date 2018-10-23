@@ -21,7 +21,7 @@ export class SlidePage {
     },
     {
       title: "Notícias",
-      description: "<b>Você</b> será ficará sempre atualizado com tudo que esta acontecendo na sua Igreja.",
+      description: "<b>Você</b> será sempre atualizado sobre os eventos que esta acontecendo na sua Igreja.",
       image: "assets/imgs/ica-slidebox-img-3.png",
     }
   ];
