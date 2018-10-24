@@ -1,6 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import * as firebase from 'Firebase';
+import { Observable } from 'rxjs/Observable';
+import { ChatRoom } from '../../model/chatRoom.model';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
@@ -11,20 +14,29 @@ export class ChatPage {
   @ViewChild(Content) content: Content;
 
   data = { roomkey:'', roomname:'', type:'', nickname:'', message:'' };
-  rooms = [];
+  rooms: Observable<ChatRoom[]>;
   ref = firebase.database().ref('chatrooms/');
   chatManagement = 'name';
   chats = [];
   offStatus:boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.ref.on('value', resp => {
-      this.rooms = [];
-      this.rooms = snapshotToArray(resp);
-    });
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    private db: AngularFireDatabase,) {
+   
+      this.rooms = this.getAll();
+
   }
 
   ionViewDidLoad() {
+  }
+
+  getAll() {
+    return this.db.list('chatrooms/', ref => ref.orderByChild('roomname'))
+      .snapshotChanges()
+      .map(changes => {
+        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      })
   }
 
   enterNickname() {
@@ -89,6 +101,10 @@ export class ChatPage {
     this.offStatus = true;
   
     this.chatManagement = 'name';
+  }
+
+  configChat(): void {
+    this.navCtrl.push('ConfigChatPage',{'rooms' : this.rooms});
   }
 
 }

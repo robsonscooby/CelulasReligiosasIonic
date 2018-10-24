@@ -74,7 +74,6 @@ export class HomePage {
       item.close();
       this.deleteFile(celula);
       this.celulaService.remove(celula.key);
-      console.log('remover sala');
       await this.removeRoom(celula.nome);
       await this.loadingService.dismiss();
     } catch (error) {

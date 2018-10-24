@@ -1,6 +1,11 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Bate-papo</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="configChat()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-buttons end *ngIf="chatManagement == 'chat'">
       <button ion-button icon-only (click)="exitChat()">
         <ion-icon name="ios-log-out"></ion-icon>
@@ -19,21 +24,17 @@
         <button ion-button full round (click)="enterNickname()">Enter</button>
       </ion-col>
     </ion-row>
-    <ion-row justify-content-center align-items-center style="height: 100%" *ngIf="chatManagement == 'room' && rooms.length == 0">
+    <ion-row justify-content-center align-items-center style="height: 100%" *ngIf="chatManagement == 'room' && (rooms | async ) == 0">
       <ion-col>
         <div text-center>
           <ion-icon size="large" name="md-thumbs-down" color="medium"></ion-icon>
           <ion-label no-margin color="medium">Lista de salas vazia.</ion-label>
         </div>
-        <ion-row *ngFor="let room of rooms" (click)="joinRoom(room.key)">
-          {{room.roomname}}
-          <ion-icon name="chatboxes" item-end></ion-icon>
-        </ion-row>
       </ion-col>
     </ion-row>
-    <ion-row style="height: 100%" *ngIf="chatManagement == 'room' && rooms.length != 0">
+    <ion-row style="height: 100%" *ngIf="chatManagement == 'room' && (rooms | async) != 0">
       <ion-col>
-        <ion-row *ngFor="let room of rooms" (click)="joinRoom(room.key)">
+        <ion-row *ngFor="let room of rooms | async" (click)="joinRoom(room.key)">
           <ion-item>
             {{room.roomname}}
             <ion-icon name="chatboxes" item-end></ion-icon>

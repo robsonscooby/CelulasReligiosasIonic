@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Configurar Salas</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="roomManagement = 'createRoom'">
+        <ion-icon name="md-add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list *ngIf="roomManagement == 'createRoom'">
+    <ion-item>
+      <ion-label floating>Criar Sala</ion-label>
+      <ion-input type="text" [(ngModel)]="roomname" name="roomname" required=""></ion-input>
+    </ion-item>
+    <ion-item>
+      <button ion-button full round (click)="addRoom()">Criar</button>
+    </ion-item>
+  </ion-list>
+  <ion-row justify-content-center align-items-center style="height: 100%" *ngIf="roomManagement == 'read' && (rooms | async) == 0">
+    <ion-col>
+      <div text-center>
+        <ion-icon size="large" name="md-thumbs-down" color="medium"></ion-icon>
+        <ion-label no-margin color="medium">Lista de salas vazia.</ion-label>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-list>
+    <ion-item-sliding *ngFor="let room of rooms | async" #item>
+      <ion-item>
+        {{room.roomname}}
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="secondary" (click)="presentAlertConfirmationClear(item, room)">
+          <ion-icon name="refresh-circle"></ion-icon>
+          Limpar
+        </button>
+      </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button color="danger" (click)="presentAlertConfirmation(item, room)">
+          <ion-icon name="trash"></ion-icon>
+          Excluir
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
