@@ -47,7 +47,7 @@ export class MapService {
     });
 
     this.map.setCenter(marker.getPosition());
-    this.map.setZoom(10);
+    this.map.setZoom(15);
 
     this.infowindow.setContent(celula.nome);
     this.infowindow.open(this.map, marker);

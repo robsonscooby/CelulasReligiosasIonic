@@ -27,7 +27,7 @@
       </div>
     </ion-col>
   </ion-row>
-  <ion-list>
+  <ion-list *ngIf="roomManagement == 'read'">
     <ion-item-sliding *ngFor="let room of rooms | async" #item>
       <ion-item>
         {{room.roomname}}

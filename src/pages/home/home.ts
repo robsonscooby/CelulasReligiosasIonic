@@ -135,9 +135,11 @@ export class HomePage {
   filterItems(ev: any) {
     this.celulaList = this.bkList;
     let val = ev.target.value;
-    return this.celulaList = this.celulaList.map(cel => cel.filter((c) => 
-      c.nome.toLowerCase().includes(val.toLowerCase())
-    ));
+    if(val){
+      return this.celulaList = this.celulaList.map(cel => cel.filter((c) => 
+        c.nome.toLowerCase().includes(val.toLowerCase())
+      ));
+    }
   }
 }
 
