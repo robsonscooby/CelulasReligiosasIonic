@@ -1,7 +1,7 @@
 import { Injectable, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { google } from '@google/maps';
-import { Celula } from '../../model/celula/celula.model';
+import { Celula } from '../../model/celula.model';
 
 declare var google: any;
 

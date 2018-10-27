@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { CelulaService } from '../../providers/celula/celula.service';
 import { Observable } from 'rxjs/Observable';
-import { Celula } from '../../model/celula/celula.model';
+import { Celula } from '../../model/celula.model';
 
 @IonicPage()
 @Component({

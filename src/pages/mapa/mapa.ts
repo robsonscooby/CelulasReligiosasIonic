@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { Celula } from '../../model/celula/celula.model';
+import { Celula } from '../../model/celula.model';
 import { MapService } from '../../providers/map/map.service';
 
 @IonicPage()

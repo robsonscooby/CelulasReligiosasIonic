@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Celula } from '../../model/celula/celula.model';
+import { Celula } from '../../model/celula.model';
 
 @IonicPage()
 @Component({

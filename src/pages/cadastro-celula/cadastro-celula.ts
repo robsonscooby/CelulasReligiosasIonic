@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, AlertController, NavParams, NavController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CelulaService } from '../../providers/celula/celula.service';
-import { Celula } from '../../model/celula/celula.model';
+import { Celula } from '../../model/celula.model';
 import { EnderecoProvider } from '../../providers/endereco/endereco';
 import { MapService } from '../../providers/map/map.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';

@@ -18,6 +18,7 @@ import { LoadingService } from '../providers/loading.service';
 import { FirebaseMessagingProvider } from '../providers/firebase-messaging';
 import 'firebase/messaging';
 import { IonicStorageModule } from '@ionic/storage';
+import { GrupoService } from '../providers/grupo/grupo.service';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { IonicStorageModule } from '@ionic/storage';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CelulaService,
+    GrupoService,
     Geolocation,
     EnderecoProvider,
     AuthService,

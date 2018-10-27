@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController, LoadingController, NavParams, ItemSliding, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { Celula } from '../../model/celula/celula.model';
+import { Celula } from '../../model/celula.model';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { CelulaService } from '../../providers/celula/celula.service';
 import { LoadingService } from '../../providers/loading.service';
