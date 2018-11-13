@@ -9,6 +9,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { LoadingService } from '../../providers/loading.service';
 import * as firebase from 'Firebase';
+import { GrupoService } from '../../providers/grupo/grupo.service';
 
 @IonicPage()
 @Component({
@@ -39,7 +40,8 @@ export class CadastroCelulaPage {
     private storage: AngularFireStorage,
     public loading: LoadingService,
     public navParams: NavParams,
-    public navCtrl: NavController) {
+    public navCtrl: NavController,
+    private send: GrupoService) {
 
     let cel = navParams.get('celula')
     if (cel) {
@@ -81,6 +83,7 @@ export class CadastroCelulaPage {
       await this.loading.present('Salvando...');
       this.celulaService.save(celula);
       this.addRoom(celula.nome);
+      this.send.sendNotification(celula.nome);
       this.navCtrl.pop();
       await this.loading.dismiss();
     } catch (error) {

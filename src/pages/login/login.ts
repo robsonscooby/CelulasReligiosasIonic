@@ -18,14 +18,18 @@ export class LoginPage {
   errorPassword = false;
   user = {} as User;
 
-  constructor(private afAuth: AngularFireAuth, private toastCtrl: ToastController,
-    public navCtrl: NavController, public navParams: NavParams, formBuilder: FormBuilder) {
+  constructor(
+    private afAuth: AngularFireAuth, 
+    private toastCtrl: ToastController,
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    formBuilder: FormBuilder) {
       this.loginForm = formBuilder.group({
         email: ['', Validators.required],
         password: ['', Validators.required]
       });
-      this.user.email = 'robsonscooby@gmail.com';
-      this.user.password = '48454845';
+      this.user.email = '';
+      this.user.password = '';
     }
  
   async login(user: User) {

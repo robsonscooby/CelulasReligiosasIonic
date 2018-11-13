@@ -19,17 +19,34 @@ export class GrupoService {
    private listaGrupos : Observable<Grupo[]>;
 
   constructor(private http: HttpClient, private db: AngularFireDatabase) {
+  }
 
-     this.listaGrupos = this. getAll();
+  sendNotification(msg: string): void {
+    this.listaGrupos = this. getAll();
 
     this.listaGrupos.subscribe((grupos) => {
       grupos.forEach( g => {
-        this.teste(g.tk);
+        this.prepare(msg, g.tk);
       });
     });
   }
 
-   getAll() {
+  save(grupo: Grupo): Promise<Grupo> {
+    return new Promise((resolve, reject) => {
+      if (grupo.key) {
+        this.db.list(this.PATH)
+          .update(grupo.key, grupo)
+          .then(() => resolve())
+          .catch((e) => reject(e));
+      } else {
+        this.db.list(this.PATH)
+          .push(grupo)
+          .then(() => resolve());
+      }
+    })
+  }
+
+   getAll(): Observable<Grupo[]> {
     return this.db.list(this.PATH, ref => ref.orderByChild('tk'))
       .snapshotChanges()
       .map(changes => {
@@ -37,19 +54,19 @@ export class GrupoService {
       })
   }
 
-  teste(tk) {
+  prepare(msg: string, tk: string): void {
     let body = 
        {
          "notification": {
-             "title": "Notification title",
-             "body": "Notification body",
+             "title": "Nova Celula de Estudo",
+             "body": msg,
              "sound": "default",
-             "click_action": "FCM_PLUGIN_ACTIVITY",
-             "icon": "fcm_push_icon"
+             "click_action": "https://celulas-religiosas-admin.firebaseapp.com",
+             "icon": "assets/imgs/logo.png"
          },
-         "data": {
-             "hello": "This is a Firebase Cloud Messagin  hbhj g Device Gr new v Message!",
-         },
+        //  "data": {
+        //      "hello": "This is a Firebase Cloud Messagin  hbhj g Device Gr new v Message!",
+        //  },
          "to": tk
        };
 
