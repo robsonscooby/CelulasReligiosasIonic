@@ -19,7 +19,6 @@
   </ion-navbar>
 </ion-header>
 <ion-content no-padding class="bg-style">
-  <ion-grid>
     <ion-row justify-content-center align-items-center *ngIf="chatManagement == 'name'">
       <ion-col>
         <ion-item>
@@ -37,7 +36,7 @@
         </div>
       </ion-col>
     </ion-row>
-    <ion-row  *ngIf="chatManagement == 'room' && (rooms | async) != 0">
+    <ion-row *ngIf="chatManagement == 'room' && (rooms | async) != 0">
       <ion-col>
         <ion-row *ngFor="let room of rooms | async" (click)="joinRoom(room.key)">
           <ion-item>
@@ -55,14 +54,14 @@
             <span class="chat-content-center">{{chat.message}}</span>
           </div>
           <ng-template #message>
-            <div class="chat-message" text-right *ngIf="chat.user === nickname">
+            <div class="chat-message" text-right *ngIf="chat.user === data.nickname">
               <div class="right-bubble">
-                <span class="msg-name">Me</span>
+                <span class="msg-name">Eu</span>
                 <span class="msg-date">{{chat.sendDate | date:'short'}}</span>
                 <p text-wrap>{{chat.message}}</p>
               </div>
             </div>
-            <div class="chat-message" text-left *ngIf="chat.user !== nickname">
+            <div class="chat-message" text-left *ngIf="chat.user !== data.nickname">
               <div class="left-bubble">
                 <span class="msg-name">{{chat.user}}</span>
                 <span class="msg-date">{{chat.sendDate | date:'short'}}</span>
@@ -73,15 +72,14 @@
         </ion-item>
       </ion-list>
     </div>
-  </ion-grid>
 </ion-content>
 <ion-footer>
-  <ion-row *ngIf="chatManagement == 'chat'">
-    <ion-col col-10>
-      <ion-input type="text" placeholder="Type a message" [(ngModel)]="data.message" name="message"></ion-input>
-    </ion-col>
-    <ion-col col-2 text-end (click)="sendMessage()">
-      <ion-icon padding-right name="paper-plane"></ion-icon>
-    </ion-col>
-  </ion-row>
+    <ion-row *ngIf="chatManagement == 'chat'">
+      <ion-col col-10>
+        <ion-input type="text" placeholder="Type a message" [(ngModel)]="data.message" name="message"></ion-input>
+      </ion-col>
+      <ion-col col-2 text-end (click)="sendMessage()">
+        <ion-icon padding-right name="paper-plane"></ion-icon>
+      </ion-col>
+    </ion-row>
 </ion-footer>

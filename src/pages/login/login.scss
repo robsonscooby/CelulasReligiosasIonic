@@ -1,16 +1,18 @@
 page-login {
-    ion-card {
-        width: 50%;
-        max-width: 600px;
-        height: fit-content;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto !important;
-        animation: fade-in 0.2s ease-in;
+    .login-logo {
+        padding: 20px 0;
+        min-height: 200px;
+        text-align: center;
     }
+
+    .login-logo img {
+        max-width: 150px;
+    }
+
+    .list {
+        margin-bottom: 0;
+    }
+
     .error{
         color: #ff0000;
         font-size: 12px;
