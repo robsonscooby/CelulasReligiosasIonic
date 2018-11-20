@@ -7,7 +7,7 @@ import { CelulaService } from '../../providers/celula/celula.service';
 import { LoadingService } from '../../providers/loading.service';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { FirebaseMessagingProvider } from '../../providers/firebase-messaging';
-import * as firebase from 'Firebase';
+import firebase from 'firebase/app'
 import { AngularFireDatabase } from 'angularfire2/database';
 
 @IonicPage()

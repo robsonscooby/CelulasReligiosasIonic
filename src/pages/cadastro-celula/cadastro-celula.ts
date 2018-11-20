@@ -8,7 +8,7 @@ import { MapService } from '../../providers/map/map.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { LoadingService } from '../../providers/loading.service';
-import * as firebase from 'Firebase';
+import firebase from 'firebase/app'
 import { GrupoService } from '../../providers/grupo/grupo.service';
 
 @IonicPage()

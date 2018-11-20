@@ -1,16 +1,15 @@
-export class Celula {
+export class Igreja {
     key?: string;
-    code: string = null;
-    descricao : string = null;
+    nome : string = null;
+    responsavel : string = null;
+    telefone : string = null;
     cep: string = null;
     endereco : string = null;
-    nome : string = null;
-    site : string = null;
-    telefone : string = null;
+    code : string = null;
+    email : string = null;  
+    senha : string = null;    
     lat: string = null;
     lng: string = null;
-    thumbnailId: string = null;
-    thumbnailURL: string = null;
 
     constructor(values: Object = {}){
         Object.keys(this).forEach(key => {

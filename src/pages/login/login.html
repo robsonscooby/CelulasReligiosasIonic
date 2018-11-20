@@ -17,12 +17,15 @@
       </ion-input>
     </ion-item>
     <ion-label *ngIf="errorPassword" class="error">{{messagePassword}}</ion-label>
+    <p></p>
     <ion-buttons text-center>
-      <button ion-button type="submit">Entrar</button>
-      <button ion-button color="light" type="button" (click)="register()">Registrar</button>
+      <button ion-button round outline type="submit">Entrar</button>
     </ion-buttons>
   </form>
   <button ion-button block clear (click)="resetPassword()">
     Esqueci minha senha
+  </button>
+  <button ion-button block clear (click)="register()">
+      Registrar
   </button>
 </ion-content>

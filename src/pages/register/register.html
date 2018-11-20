@@ -1,25 +1,54 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Register</ion-title>
+    <ion-title>Cadastro Igreja</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <form [formGroup]="loginForm" (submit)="validalogin(user)" novalidate>
     <ion-item>
-      <ion-label floating>E-mail</ion-label>
-      <ion-input [(ngModel)]="user.email" formControlName="email" type="text" placeholder="E-mail" clearInput clearOnEdit="false">
+      <ion-label floating>Nome da Igreja</ion-label>
+      <ion-input [(ngModel)]="igreja.nome" formControlName="nome" type="text" placeholder="Nome da Igreja" clearInput
+        clearOnEdit="false"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Seu Nome</ion-label>
+      <ion-input [(ngModel)]="igreja.responsavel" formControlName="resp" type="text" placeholder="Seu Nome" clearInput
+        clearOnEdit="false"></ion-input>
+    </ion-item>
+    <ion-input-mask type="text" placeholder="Telefone" formControlName="tel" [(ngModel)]="igreja.telefone" mask="(99) 99999-9999"></ion-input-mask>
+    <ion-row>
+      <ion-col>
+        <ion-input-mask [(ngModel)]="igreja.cep" formControlName="cep" type="text" placeholder="Cep" mask="99.999-999"
+          [clearIfNotMatch]="true" [lastChild]="true" [dropSpecialCharacters]="true">
+        </ion-input-mask>
+      </ion-col>
+      <ion-col class="button-padding">
+        <button ion-button [disabled]='igreja.cep == null || igreja.cep.length < 8' type="button" block outline (click)='getEndereco()'>
+          <ion-icon name="search"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-item>
+      <ion-input [(ngModel)]="igreja.endereco" formControlName="endereco" type="text" placeholder="Endereço" clearInput
+        clearOnEdit="false">
       </ion-input>
     </ion-item>
-    <ion-label *ngIf="errorEmail" class="error"> {{messageEmail}}</ion-label>
+    <ion-item>
+      <ion-label floating>E-mail</ion-label>
+      <ion-input [(ngModel)]="igreja.email" formControlName="email" type="text" placeholder="E-mail" clearInput
+        clearOnEdit="false">
+      </ion-input>
+    </ion-item>
     <ion-item>
       <ion-label floating>Senha</ion-label>
-      <ion-input [(ngModel)]="user.password" formControlName="password" type="password" placeholder="Senha" clearInput clearOnEdit="false">
+      <ion-input [(ngModel)]="igreja.senha" formControlName="senha" type="password" placeholder="Senha" clearInput
+        clearOnEdit="false">
       </ion-input>
     </ion-item>
-    <ion-label *ngIf="errorPassword" class="error"> {{messagePassword}}</ion-label>
+    <p></p>
     <ion-buttons text-center>
-      <button ion-button type="submit">Registrar</button>
+      <button ion-button round outline type="submit">Registrar</button>
     </ion-buttons>
   </form>
 </ion-content>

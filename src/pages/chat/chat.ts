@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
-import * as firebase from 'Firebase';
+import firebase from 'firebase/app'
 import { Observable } from 'rxjs/Observable';
 import { ChatRoom } from '../../model/chatRoom.model';
 import { AngularFireDatabase } from 'angularfire2/database';

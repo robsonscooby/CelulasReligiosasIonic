@@ -1,4 +1,4 @@
-import { Chat } from "./chat";
+import { Chat } from "./chat.model";
 
 export class ChatRoom {
     key?: string;

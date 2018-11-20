@@ -19,6 +19,7 @@ import { FirebaseMessagingProvider } from '../providers/firebase-messaging';
 import 'firebase/messaging';
 import { IonicStorageModule } from '@ionic/storage';
 import { GrupoService } from '../providers/grupo/grupo.service';
+import { IgrejaService } from '../providers/igreja/igreja.service';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { GrupoService } from '../providers/grupo/grupo.service';
     EnderecoProvider,
     AuthService,
     LoadingService,
+    IgrejaService,
     FirebaseMessagingProvider
   ]
 })

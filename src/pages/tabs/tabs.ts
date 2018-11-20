@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavParams } from 'ionic-angular';
 import { CelulaService } from '../../providers/celula/celula.service';
 import { Observable } from 'rxjs/Observable';
 import { Celula } from '../../model/celula.model';
+import { AuthService } from '../../providers/auth/auth-service';
 
 @IonicPage()
 @Component({
@@ -17,11 +18,15 @@ export class TabsPage {
 
   celulaList: Observable<Celula[]>
 
-  constructor(private celulaService: CelulaService) {
+  constructor(
+    private celulaService: CelulaService,
+    public params: NavParams,
+    public authService: AuthService) {
+
     this.getFromFirebaseAsync();
   }
   
   async getFromFirebaseAsync(){
-    this.celulaList = await this.celulaService.getAll();
+    this.celulaList = await this.celulaService.getAll(this.authService.getCode());
   }
 }

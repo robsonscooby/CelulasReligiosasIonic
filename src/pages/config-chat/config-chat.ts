@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ItemSliding, AlertController } from 'ionic-angular';
-import * as firebase from 'Firebase';
+import firebase from 'firebase/app'
 import { LoadingService } from '../../providers/loading.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';

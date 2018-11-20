@@ -5,6 +5,8 @@ import { User } from './user';
 @Injectable()
 export class AuthService {
 
+  private code: string;
+
   constructor(private angularFireAuth: AngularFireAuth) { }
 
   createUser(user: User) {
@@ -17,5 +19,13 @@ export class AuthService {
 
   resetPassword(email: string) {
     return this.angularFireAuth.auth.sendPasswordResetEmail(email);
+  }
+
+  setCode(code: string): void {
+    this.code = code;
+  }
+
+  getCode(): string {
+    return this.code;
   }
 }
