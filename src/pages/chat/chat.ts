@@ -4,6 +4,7 @@ import firebase from 'firebase/app'
 import { Observable } from 'rxjs/Observable';
 import { ChatRoom } from '../../model/chatRoom.model';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AuthService } from '../../providers/auth/auth-service';
 
 @IonicPage()
 @Component({
@@ -20,19 +21,21 @@ export class ChatPage {
   chats = [];
   offStatus:boolean = false;
 
-  constructor(public navCtrl: NavController, 
+  constructor(
+    public navCtrl: NavController, 
     public navParams: NavParams,
-    private db: AngularFireDatabase,) {
+    private db: AngularFireDatabase,
+    private authService: AuthService) {
    
-      this.rooms = this.getAll();
+      this.rooms = this.getAll(this.authService.getCode());
 
   }
 
   ionViewDidLoad() {
   }
 
-  getAll() {
-    return this.db.list('chatrooms/', ref => ref.orderByChild('roomname'))
+  getAll(code: string) {
+    return this.db.list('chatrooms/', ref => ref.orderByChild('code').equalTo(code))
       .snapshotChanges()
       .map(changes => {
         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));

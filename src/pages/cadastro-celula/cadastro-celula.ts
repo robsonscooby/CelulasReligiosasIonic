@@ -10,6 +10,7 @@ import { AngularFireStorage } from 'angularfire2/storage';
 import { LoadingService } from '../../providers/loading.service';
 import firebase from 'firebase/app'
 import { GrupoService } from '../../providers/grupo/grupo.service';
+import { AuthService } from '../../providers/auth/auth-service';
 
 @IonicPage()
 @Component({
@@ -26,8 +27,8 @@ export class CadastroCelulaPage {
   errorAdress = false;
   celula: Celula = new Celula();
   enderecoCep: any[];
-  cep = '';
   isenabled: boolean = false;
+  isVisible: boolean = false;
 
   private selectedFile: { data: any, base64: string } = { data: null, base64: null };
 
@@ -41,7 +42,8 @@ export class CadastroCelulaPage {
     public loading: LoadingService,
     public navParams: NavParams,
     public navCtrl: NavController,
-    private send: GrupoService) {
+    private send: GrupoService,
+    private authService: AuthService) {
 
     let cel = navParams.get('celula')
     if (cel) {
@@ -81,9 +83,14 @@ export class CadastroCelulaPage {
 
     try {
       await this.loading.present('Salvando...');
+      if(!celula.key){
+        celula.code = this.authService.getCode();
+      }
       this.celulaService.save(celula);
-      this.addRoom(celula.nome);
-      this.send.sendNotification(celula.nome);
+      if(!celula.key){
+        this.addRoom(celula);
+        this.send.sendNotification(celula.nome);
+      }
       this.navCtrl.pop();
       await this.loading.dismiss();
     } catch (error) {
@@ -118,7 +125,7 @@ export class CadastroCelulaPage {
 
   getEndereco() {
     //this.cep = '53421180'
-    this.enderecoService.getEndereco(this.cep)
+    this.enderecoService.getEndereco(this.celula.cep)
       .then((result: string) => {
         this.celula.endereco = result;
       })
@@ -197,6 +204,9 @@ export class CadastroCelulaPage {
   }
 
   async deleteFile(): Promise<void> {
+    if(!this.celula.thumbnailId){
+      return;
+    }
     try {
       const filePath = `celulas/${this.celula.thumbnailId}`;
       const fileRef = this.storage.ref(filePath);
@@ -211,11 +221,12 @@ export class CadastroCelulaPage {
     this.celula = new Celula();
   }
 
-  addRoom(name): void {
+  addRoom(celula: Celula): void {
     let ref = firebase.database().ref('chatrooms/');
     let newData = ref.push();
     newData.set({
-      roomname: name
+      roomname: celula.nome,
+      code: celula.code
     });
   }
 

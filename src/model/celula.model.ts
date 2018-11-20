@@ -1,6 +1,7 @@
 export class Celula {
     key?: string;
     code: string = null;
+    status: boolean = false;
     descricao : string = null;
     cep: string = null;
     endereco : string = null;

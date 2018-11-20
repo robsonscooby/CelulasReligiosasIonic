@@ -83,6 +83,9 @@ export class HomePage {
   }
 
   async deleteFile(celula: Celula): Promise<void> {
+    if(!celula.thumbnailId){
+      return;
+    }
     try {
       const filePath = `celulas/${celula.thumbnailId}`;
       const fileRef = this.storage.ref(filePath);
@@ -92,19 +95,17 @@ export class HomePage {
     }
   }
 
-  async removeRoom(nome): Promise<void> {
-    let rooms = [];
-    let ref = await firebase.database().ref('chatrooms/');
-    ref.on('value', resp => {
-      rooms = snapshotToArray(resp);
-    });
-
-    rooms.filter(async sala => {
-      if(sala.roomname == nome){
-        this.db.list('chatrooms/').remove(sala.key);
-      }
-    });
-    
+  removeRoom(nome): Promise<void> {
+    return new Promise((resolve) => {
+      firebase.database().ref('chatrooms/').on('value', resp => {
+        snapshotToArray(resp).filter(async sala => {
+          if(sala.roomname == nome){
+            this.db.list('chatrooms/').remove(sala.key);
+            resolve();
+          }
+        }); 
+      });
+    }); 
   }
 
   more(item: ItemSliding, celula: Celula) :void {
