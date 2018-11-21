@@ -26,6 +26,7 @@ export class CelulaService {
   }
 
   save(celula: Celula) {
+    celula = JSON.parse( JSON.stringify(celula))
     return new Promise((resolve, reject) => {
       if (celula.key) {
         this.db.list(this.PATH)
