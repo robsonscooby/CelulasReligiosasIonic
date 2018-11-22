@@ -13,8 +13,8 @@ export class TabsPage {
 
   tab1Root = 'HomePage';
   tab2Root = 'MapaPage';
-  tab3Root = 'ContactPage';
-  tab4Root = 'ChatPage';
+  tab3Root = 'ChatPage';
+  tab4Root = 'ContactPage';
 
   celulaList: Observable<Celula[]>
 

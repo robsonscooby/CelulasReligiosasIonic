@@ -29,7 +29,7 @@ export class SlidePage {
   constructor(public navCtrl: NavController) {}
 
   home() {
-    this.navCtrl.push('TabsPage');
+    this.navCtrl.push('LoginPage');
   }
 
 }

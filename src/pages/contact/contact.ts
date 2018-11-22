@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
+import { AuthService } from '../../providers/auth/auth-service';
 
 @IonicPage()
 @Component({
@@ -19,11 +20,8 @@ export class ContactPage {
     description: 'Um homem sábio disse uma vez: quanto mais você fizer alguma coisa, melhor você se tornará nisso.',
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(public auth: AuthService) {}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ContactPage');
-  }
+  ionViewDidLoad() {}
 
 }
