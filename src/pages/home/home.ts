@@ -23,6 +23,7 @@ export class HomePage {
     spinner: 'ios',
     content: 'Carregando todas as celulas de estudos bíblicos.'
   });
+  icon: string = 'ios-log-out';
 
   constructor(
     private afAuth: AngularFireAuth, 
@@ -141,6 +142,11 @@ export class HomePage {
         c.nome.toLowerCase().includes(val.toLowerCase())
       ));
     }
+  }
+
+  openPageLogin() :void {
+    this.afAuth.auth.signOut();
+    this.navCtrl.push('LoginPage');
   }
 }
 
