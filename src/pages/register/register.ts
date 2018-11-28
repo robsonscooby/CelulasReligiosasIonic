@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 import { FormBuilder, Validators } from '@angular/forms';
 import { UUID } from 'angular2-uuid';
@@ -31,9 +31,9 @@ export class RegisterPage {
     public formBuilder: FormBuilder,
     private enderecoService: EnderecoProvider,
     private igrejaService: IgrejaService,
-    public loading: LoadingService) {
+    public loading: LoadingService,
+    private alertCtrl: AlertController,) {
 
-      this.generateCode();
       this.loginForm = formBuilder.group({
         nome: ['', Validators.required],
         resp: ['', Validators.required],
@@ -51,7 +51,8 @@ export class RegisterPage {
       await this.loading.present('Cadastrando...');
       await this.afAuth.auth.createUserWithEmailAndPassword(this.igreja.email, this.igreja.senha);
       this.igreja.senha = null;
-      this.igreja.code = this.generateCode();
+      await this.generateCode();
+      this.igreja.code = this.code;
       await this.igrejaService.save(this.igreja);
       await this.loading.dismiss();
       toast.setMessage('Igreja cadastra com sucesso.');
@@ -76,13 +77,11 @@ export class RegisterPage {
     if (this.loginForm.valid) {
       this.registerLogin();
     }else{
-      console.log('Favor Preencher todos os campos.');
+      this.presentAlert();
     }
   }
     
-
   getEndereco() {
-    //this.cep = '53421180'
     this.enderecoService.getEndereco(this.igreja.cep)
       .then((result: string) => {
         this.igreja.endereco = result;
@@ -92,10 +91,37 @@ export class RegisterPage {
       });
   }
 
-  generateCode(): string {
-    this.code = UUID.UUID();
-    let ret = this.code.split("-");
-    this.code = ret[1];
-    return this.code;
+  async generateCode(){
+      this.code = UUID.UUID();
+      let ret = this.code.split("-");
+      this.code = ret[1];
+      console.log(this.code);
+      await this.buscarCode(this.code);
   }
+
+  async buscarCode(code: string): Promise<any> {
+    return new Promise(async (resolve) => {
+      await this.igrejaService.getAll(code).subscribe(async (res) => {
+        if(!res.length){
+          resolve();
+        }else{
+          await this.generateCode();
+        }
+      });
+    });
+  }
+
+  async presentAlert(): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      title: 'Alerta',
+      message: 'Favor Preencher todos os campos.',
+      buttons: [
+        {
+          text: 'Ok'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
 }

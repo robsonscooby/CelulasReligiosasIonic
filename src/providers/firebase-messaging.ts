@@ -23,9 +23,9 @@ export class FirebaseMessagingProvider {
     }
 
     public enableNotifications() {
-        console.log('Requesting permission...');
+        //console.log('Requesting permission...');
         return this.messaging.requestPermission().then(() => {
-            console.log('Permission granted');
+            //console.log('Permission granted');
             // token might change - we need to listen for changes to it and update it
             this.setupOnTokenRefresh();
             return this.updateToken();
@@ -53,14 +53,14 @@ export class FirebaseMessagingProvider {
 
                 return localStorage.setItem(this.config_key_name,currentToken);
             } else {
-                console.log('No Instance ID token available. Request permission to generate one.');
+                //console.log('No Instance ID token available. Request permission to generate one.');
             }
         });
     }
 
     private setupOnTokenRefresh(): void {
         this.unsubscribeOnTokenRefresh = this.messaging.onTokenRefresh(() => {
-            console.log("Token refreshed");
+            //console.log("Token refreshed");
             localStorage.setItem(this.config_key_name,'');
             this.updateToken(); 
         });

@@ -1,18 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-/*
-  Generated class for the EnderecoProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class EnderecoProvider {
 
-  constructor(public http: HttpClient) {
-    console.log('Hello EnderecoProvider Provider');
-  }
+  constructor(public http: HttpClient) {}
 
   getEndereco(cep: string)  {
     return new Promise((resolve, reject) => {

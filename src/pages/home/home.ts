@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ToastController, LoadingController, NavParams, ItemSliding, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, LoadingController, NavParams, ItemSliding, AlertController, App } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Celula } from '../../model/celula.model';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -9,6 +9,7 @@ import { AngularFireStorage } from 'angularfire2/storage';
 import { FirebaseMessagingProvider } from '../../providers/firebase-messaging';
 import firebase from 'firebase/app'
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AuthService } from '../../providers/auth/auth-service';
 
 @IonicPage()
 @Component({
@@ -36,7 +37,9 @@ export class HomePage {
     private storage: AngularFireStorage,
     private alertCtrl: AlertController,
     public fireMessege: FirebaseMessagingProvider,
-    private db: AngularFireDatabase) {
+    private db: AngularFireDatabase,
+    public authService: AuthService,
+    public app: App) {
   
       this.celulaList = params.data;
       this.bkList = this.celulaList;
@@ -144,9 +147,9 @@ export class HomePage {
     }
   }
 
-  openPageLogin() :void {
-    this.afAuth.auth.signOut();
-    this.navCtrl.push('LoginPage');
+  async openPageLogin() :Promise<void> {
+      await this.authService.signOut();
+      this.app.getRootNav().setRoot('LoginPage');
   }
 }
 

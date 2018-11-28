@@ -18,12 +18,19 @@ export class IgrejaService {
       });
   }
 
-
   get(igreja: Igreja) {
     return this.db.object(this.PATH + igreja.key)
     .snapshotChanges()
       .map(c => {
         return { key: c.key, ...c.payload.val() };
+      });
+  }
+
+  getAll(code: string) {
+    return this.db.list(this.PATH, ref => ref.orderByChild('code').equalTo(code))
+      .snapshotChanges()
+      .map(changes => {
+        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
       });
   }
 

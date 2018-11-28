@@ -58,4 +58,8 @@ export class ResetpasswordPage {
       });
   }
 
+  back(): void {
+    this.navCtrl.setRoot('LoginPage');
+  }
+
 }
