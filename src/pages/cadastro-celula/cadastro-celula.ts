@@ -89,7 +89,7 @@ export class CadastroCelulaPage {
       this.celulaService.save(celula);
       if(!celula.key){
         this.addRoom(celula);
-        this.send.sendNotification(celula.nome);
+        this.send.sendNotification(celula);
       }
       this.navCtrl.pop();
       await this.loading.dismiss();

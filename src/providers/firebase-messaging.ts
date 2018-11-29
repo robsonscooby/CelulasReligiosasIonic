@@ -7,28 +7,31 @@ import { Grupo } from "../model/grupo.model";
 export class FirebaseMessagingProvider {
     
     private messaging;
-    private config_key_name = 'fcmToken';
+    private config_key_name = 'fcmTokenCelRel';
     private unsubscribeOnTokenRefresh = () => { };
 
     constructor(
         private app: FirebaseApp,
-        private grupo: GrupoService
-    ) {
+        private grupo: GrupoService) {}
+
+    public createSubscribe(code: string): void {
         this.messaging = this.app.messaging();
         navigator.serviceWorker.register('service-worker.js').then((registration) => {
             this.messaging.useServiceWorker(registration);
             //this.disableNotifications()
-            this.enableNotifications();
+            let grupo = new Grupo();
+            grupo.code = code;
+            this.enableNotifications(grupo);
         });
-    }
+    }    
 
-    public enableNotifications() {
+    public enableNotifications(grupo: Grupo) {
         //console.log('Requesting permission...');
         return this.messaging.requestPermission().then(() => {
             //console.log('Permission granted');
             // token might change - we need to listen for changes to it and update it
-            this.setupOnTokenRefresh();
-            return this.updateToken();
+            this.setupOnTokenRefresh(grupo);
+            return this.updateToken(grupo);
         });
     }
 
@@ -38,7 +41,7 @@ export class FirebaseMessagingProvider {
         return localStorage.clear();
     }
 
-    private updateToken() {
+    private updateToken(grupo: Grupo) {
         return this.messaging.getToken().then((currentToken) => {
             if (currentToken) {
                 // we've got the token from Firebase, now let's store it in the database
@@ -47,7 +50,6 @@ export class FirebaseMessagingProvider {
                     return;
                 }
                
-                let grupo = new Grupo();
                 grupo.tk = currentToken;
                 this.grupo.save(grupo);
 
@@ -58,11 +60,11 @@ export class FirebaseMessagingProvider {
         });
     }
 
-    private setupOnTokenRefresh(): void {
+    private setupOnTokenRefresh(grupo: Grupo): void {
         this.unsubscribeOnTokenRefresh = this.messaging.onTokenRefresh(() => {
             //console.log("Token refreshed");
             localStorage.setItem(this.config_key_name,'');
-            this.updateToken(); 
+            this.updateToken(grupo); 
         });
     }
 

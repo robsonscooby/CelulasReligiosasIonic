@@ -1,5 +1,6 @@
 export class Grupo {
     key?: string;
+    code : string = null;
     grupo : string = null;
     tk : string = null;
 
