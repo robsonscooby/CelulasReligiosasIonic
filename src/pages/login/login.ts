@@ -45,6 +45,7 @@ export class LoginPage {
       this.authService.signIn(user).then(async () => {
         await this.buscarIgreja(user.email);
         this.authService.setCode(this.retUser.code);
+        this.authService.setIgreja(this.retUser);
         this.navCtrl.setRoot('TabsPage');
       })
         .catch((error: any) => {
