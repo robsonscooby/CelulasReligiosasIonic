@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { Grupo } from '../../model/grupo.model';
+import { Celula } from '../../model/celula.model';
 
 @Injectable()
 export class GrupoService {
 
   private url: string = 'https://fcm.googleapis.com/fcm/send';
   private PATH = 'grupos/';
-  private tk: string = 'key=AAAA-OCO8kU:APA91bHaJJgo3a6BcvUTuqynHiXhQZH5RE4tZfnN-4PzODut2h26frlEgDdUyiUpFCDbDrfxEqIOdV3ps9_4gTqN0eibrUgvWTQbbA0WUnSvzZ7rHRZ3aKEVr6fhtR-NtuGK330zx1IQ';
+  privte tk: string = 'key=_rEyow2rZv29TnPggzMici119_0TM7Yul7gzgWzEZ-QrX'
   options = {
     headers: new HttpHeaders({
       'Content-Type':'application/json',
@@ -21,12 +22,11 @@ export class GrupoService {
   constructor(private http: HttpClient, private db: AngularFireDatabase) {
   }
 
-  sendNotification(msg: string): void {
-    this.listaGrupos = this. getAll();
-
+  sendNotification(celula: Celula): void {
+    this.listaGrupos = this.getAll(celula.code);
     this.listaGrupos.subscribe((grupos) => {
       grupos.forEach( g => {
-        this.prepare(msg, g.tk);
+        this.prepare(celula.nome, g.tk);
       });
     });
   }
@@ -46,8 +46,8 @@ export class GrupoService {
     })
   }
 
-   getAll(): Observable<Grupo[]> {
-    return this.db.list(this.PATH, ref => ref.orderByChild('tk'))
+   getAll(code: string): Observable<Grupo[]> {
+    return this.db.list(this.PATH, ref => ref.orderByChild('code').equalTo(code))
       .snapshotChanges()
       .map(changes => {
         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
@@ -61,7 +61,7 @@ export class GrupoService {
              "title": "Nova Celula de Estudo",
              "body": msg,
              "sound": "default",
-             "click_action": "https://celulas-religiosas-admin.firebaseapp.com",
+             "click_action": "https://celulasreligiosas.firebaseapp.com",
              "icon": "assets/imgs/logo.png"
          },
         //  "data": {
@@ -74,7 +74,7 @@ export class GrupoService {
         return response;
       }).subscribe(data => {
          //post doesn't fire if it doesn't get subscribed to
-         console.log(data);
+         //console.log(data);
       });
   }
   

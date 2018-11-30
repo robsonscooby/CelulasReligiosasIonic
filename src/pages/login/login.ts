@@ -6,6 +6,7 @@ import { IgrejaService } from '../../providers/igreja/igreja.service';
 import { Igreja } from '../../model/igreja.model';
 import { LoadingService } from '../../providers/loading.service';
 import { AuthService } from '../../providers/auth/auth-service';
+import { FirebaseMessagingProvider } from '../../providers/firebase-messaging';
 
 @IonicPage()
 @Component({
@@ -29,7 +30,8 @@ export class LoginPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     private igrejaService: IgrejaService,
-    public loadingService: LoadingService) {
+    public loadingService: LoadingService,
+    private fireMesseg: FirebaseMessagingProvider) {
 
     this.loginForm = formBuilder.group({
       email: ['', Validators.required],
@@ -45,6 +47,7 @@ export class LoginPage {
       this.authService.signIn(user).then(async () => {
         await this.buscarIgreja(user.email);
         this.authService.setCode(this.retUser.code);
+        await this.fireMesseg.createSubscribe(this.retUser.code);
         this.navCtrl.setRoot('TabsPage');
       })
         .catch((error: any) => {
