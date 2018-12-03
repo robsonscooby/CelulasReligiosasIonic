@@ -1,10 +1,8 @@
-page-contact {
+page-about {
     ion-content {
         background: linear-gradient(0deg, #eeeef1 0%, white 80%, white 100%);
     }
-    #code{
-        padding-top: 30px; 
-    }
+    
     // Cover image
     #profile-bg {
         position: absolute;
@@ -47,5 +45,4 @@ page-contact {
         font-size: 15px;
         color: #888;
     }
-
 }
