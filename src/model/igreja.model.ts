@@ -7,7 +7,8 @@ export class Igreja {
     endereco : string = null;
     code : string = null;
     email : string = null;  
-    senha : string = null;    
+    senha1 : string = null;
+    senha2 : string = null;     
     lat: string = null;
     lng: string = null;
 

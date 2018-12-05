@@ -6,7 +6,7 @@ export class Celula {
     cep: string = null;
     endereco : string = null;
     nome : string = null;
-    site : string = null;
+    email : string = null;
     telefone : string = null;
     lat: string = null;
     lng: string = null;

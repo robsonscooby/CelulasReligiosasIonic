@@ -41,7 +41,8 @@ export class RegisterPage {
         cep: ['', Validators.required],
         endereco: ['', Validators.required],
         email: ['', Validators.required],
-        senha: ['', Validators.required]
+        senha1: ['', Validators.required],
+        senha2: ['', Validators.required]
       });
   }
 
@@ -49,8 +50,9 @@ export class RegisterPage {
     let toast = this.toastCtrl.create({ duration: 3000, position: 'bottom' });
     try {
       await this.loading.present('Cadastrando...');
-      await this.afAuth.auth.createUserWithEmailAndPassword(this.igreja.email, this.igreja.senha);
-      this.igreja.senha = null;
+      await this.afAuth.auth.createUserWithEmailAndPassword(this.igreja.email, this.igreja.senha1);
+      this.igreja.senha1 = null;
+      
       await this.generateCode();
       this.igreja.code = this.code;
       await this.igrejaService.save(this.igreja);
@@ -75,10 +77,19 @@ export class RegisterPage {
 
   validalogin() {
     if (this.loginForm.valid) {
-      this.registerLogin();
+      if(this.validaPassword()){
+        this.registerLogin();
+      }else{
+        this.igreja.senha2 = null;
+        this.presentAlert('Senhas diferentes.');
+      }
     }else{
-      this.presentAlert();
+      this.presentAlert('Favor Preencher todos os campos.');
     }
+  }
+
+  validaPassword(): boolean {
+    return this.igreja.senha1 == this.igreja.senha2;
   }
     
   getEndereco() {
@@ -111,10 +122,10 @@ export class RegisterPage {
     });
   }
 
-  async presentAlert(): Promise<void> {
+  async presentAlert(msg: string): Promise<void> {
     const alert = await this.alertCtrl.create({
       title: 'Alerta',
-      message: 'Favor Preencher todos os campos.',
+      message: msg,
       buttons: [
         {
           text: 'Ok'

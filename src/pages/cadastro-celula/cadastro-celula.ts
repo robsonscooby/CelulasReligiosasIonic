@@ -56,7 +56,7 @@ export class CadastroCelulaPage {
       adress: ['', Validators.required],
       cep: '',
       tel: '',
-      site: '',
+      email: '',
       desc: ''
     });
   }

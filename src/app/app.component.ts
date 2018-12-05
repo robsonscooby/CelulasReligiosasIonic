@@ -26,10 +26,6 @@ export class MyApp {
         configProvider.setConfigData(false);
       }else{
         this.rootPage = 'LoginPage';
-        //this.rootPage = 'ChatPage';
-        //this.rootPage = 'HomePage';
-        //this.rootPage = 'MapaPage';
-        //this.rootPage = 'CadastroCelulaPage';
       }
 
       statusBar.styleDefault();
