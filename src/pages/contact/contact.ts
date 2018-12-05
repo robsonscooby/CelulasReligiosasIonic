@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth/auth-service';
 import { Igreja } from '../../model/igreja.model';
 
@@ -10,25 +10,19 @@ import { Igreja } from '../../model/igreja.model';
 })
 export class ContactPage {
 
-  following = false;
-  user = {
-    name: 'Igreja de Deus',
-    email: 'igreja@igd.com',
-    phone: 'Santo Amaro',
-    profileImage: 'assets/imgs/logo.png',
-    coverImage: 'assets/imgs/background/background-5.jpg',
-    location: 'Recife - PE - Brasil',
-    description: 'O senhor é o teu pastor e nada te faltará',
-  };
+  igreja: Igreja; 
 
-  constructor(public auth: AuthService) {
-    let data: Igreja = auth.getInformation();
-    this.user.name = data.nome;
-    this.user.email = data.email;
-    this.user.phone = data.telefone;
-    this.user.location = data.endereco;
+  constructor(public auth: AuthService, public navCtrl: NavController) {
+    this.igreja = auth.getInformation();
+    if (this.igreja.thumbnailURL == undefined) {
+      this.igreja.thumbnailURL = 'assets/imgs/logo.png';
+    }
   }
 
   ionViewDidLoad() { }
+
+  openInfo(): void {
+    this.navCtrl.push('AboutPage');
+  }
 
 }

@@ -4,6 +4,19 @@
   </ion-navbar>
 </ion-header>
 <ion-content no-padding>
+    <ion-grid *ngIf="selectedFile.base64">
+        <img [src]="selectedFile.base64" class="img-top-profile">
+        <button ion-button icon-only (click)="selectedFile = { data: null, base64: null }">
+          <ion-icon name="ios-trash"></ion-icon>
+        </button>
+      </ion-grid>
+      <div *ngIf="!selectedFile.base64">
+        <div class="img-input" (click)="inputFile.click()">
+          <ion-icon name="ios-images"></ion-icon>
+          <p>Adicionar Foto</p>
+        </div>
+        <input type="file" #inputFile class="inputfile" (change)="openFile($event)" />
+      </div>
   <form [formGroup]="loginForm" (submit)="validalogin(user)">
     <ion-item>
       <ion-label floating>Nome da Igreja</ion-label>

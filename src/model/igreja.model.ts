@@ -11,6 +11,8 @@ export class Igreja {
     senha2 : string = null;     
     lat: string = null;
     lng: string = null;
+    thumbnailId: string = null;
+    thumbnailURL: string = null;
 
     constructor(values: Object = {}){
         Object.keys(this).forEach(key => {

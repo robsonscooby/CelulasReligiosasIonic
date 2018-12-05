@@ -2,35 +2,31 @@
   <ion-navbar>
     <ion-title>Contato</ion-title>
     <ion-buttons end>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
+      <button ion-button icon-only (click)="openInfo()">
+        <ion-icon name="ios-information-circle-outline"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
-
 <ion-content padding class="transparent-header">
-
-  <div id="profile-bg" [ngStyle]="{'background-image': 'url(' + user.coverImage +')'}"></div>
   <div id="content">
     <div id="profile-info" padding>
-      <img id="profile-image" [src]="user.profileImage">
-      <h3 id="profile-name">{{user.name}}</h3>
-      <p>{{user.location}}</p>
-      <p class="profile-description">{{user.description}}</p>
+      <img id="profile-image" [src]="igreja.thumbnailURL">
+      <h3 id="profile-name">{{igreja.nome}}</h3>
+      <p>{{igreja.endereco}}</p>
+      <p class="profile-description">{{igreja.responsavel}}</p>
       <p>
         <ion-icon name="call" color="primary" item-start></ion-icon>
-        <b> {{user.phone}}</b>
+        <b> {{igreja.telefone}}</b>
       </p>
       <p >
         <ion-icon name="mail" color="primary" item-start></ion-icon>
-        <b> {{user.email}}</b>
+        <b> {{igreja.email}}</b>
       </p>
     </div>
   </div>
   <div text-center id="code">
     <p>Seu código</p>
-    <h1><b>{{ auth.getCode() }}</b></h1>
+    <h1><b>{{igreja.code}}</b></h1>
   </div>
 </ion-content>

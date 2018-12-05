@@ -7,6 +7,7 @@ import { Igreja } from '../../model/igreja.model';
 import { EnderecoProvider } from '../../providers/endereco/endereco';
 import { IgrejaService } from '../../providers/igreja/igreja.service';
 import { LoadingService } from '../../providers/loading.service';
+import { AngularFireStorage } from 'angularfire2/storage';
 
 @IonicPage()
 @Component({
@@ -23,6 +24,8 @@ export class RegisterPage {
   igreja = {} as Igreja;
   code: string;
 
+  selectedFile: { data: any, base64: string } = { data: null, base64: null };
+
   constructor(
     private afAuth: AngularFireAuth, 
     private toastCtrl: ToastController,
@@ -32,7 +35,8 @@ export class RegisterPage {
     private enderecoService: EnderecoProvider,
     private igrejaService: IgrejaService,
     public loading: LoadingService,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private storage: AngularFireStorage,) {
 
       this.loginForm = formBuilder.group({
         nome: ['', Validators.required],
@@ -51,6 +55,11 @@ export class RegisterPage {
     try {
       await this.loading.present('Cadastrando...');
       await this.afAuth.auth.createUserWithEmailAndPassword(this.igreja.email, this.igreja.senha1);
+
+      if (this.selectedFile) {
+        await this.uploadFile();
+      }
+
       this.igreja.senha1 = null;
       
       await this.generateCode();
@@ -133,6 +142,40 @@ export class RegisterPage {
       ]
     });
     await alert.present();
+  }
+
+  async openFile(event: any): Promise<void> {
+    const file = event.target.files[0];
+
+    if (file.type.split('/')[0] !== 'image') {
+      console.error('Tipo de arquivo não suportado.');
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = e => {
+      const base64 = reader.result as string;
+      this.selectedFile.data = file;
+      this.selectedFile.base64 = base64;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async uploadFile(): Promise<void> {
+    if (!this.selectedFile.data) {
+      return;
+    }
+    try {
+      const id = `${new Date().getTime()}_${this.selectedFile.data.name}`;
+      const filePath = `igrejas/${id}`;
+      const fileRef = this.storage.ref(filePath);
+      await this.storage.upload(filePath, this.selectedFile.data);
+      this.igreja.thumbnailURL = await fileRef.getDownloadURL().toPromise();
+      this.igreja.thumbnailId = id;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }
