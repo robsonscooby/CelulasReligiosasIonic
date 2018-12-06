@@ -1,6 +1,6 @@
 {
-  "name": "Celulas Religiosas",
-  "short_name": "Celulas Religiosas",
+  "name": "Admin-Celulas Religiosas",
+  "short_name": "Admin-Celulas Religiosas",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{

@@ -36,7 +36,7 @@ export class RegisterPage {
     private igrejaService: IgrejaService,
     public loading: LoadingService,
     private alertCtrl: AlertController,
-    private storage: AngularFireStorage,) {
+    private storage: AngularFireStorage) {
 
       this.loginForm = formBuilder.group({
         nome: ['', Validators.required],
@@ -61,6 +61,7 @@ export class RegisterPage {
       }
 
       this.igreja.senha1 = null;
+      this.igreja.senha2 = null 
       
       await this.generateCode();
       this.igreja.code = this.code;

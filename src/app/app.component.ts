@@ -18,9 +18,9 @@ export class MyApp {
   pages: Array<{ title: string, component: any }>;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, configProvider: ConfigProvider) {
-    this.pages = [
-      { title: 'Sobre', component: "AboutPage" },
-    ];
+    // this.pages = [
+    //   { title: 'Sobre', component: "AboutPage" },
+    // ];
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
