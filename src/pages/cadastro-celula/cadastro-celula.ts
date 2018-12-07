@@ -28,7 +28,6 @@ export class CadastroCelulaPage {
   celula: Celula = new Celula();
   enderecoCep: any[];
   isenabled: boolean = false;
-  isVisible: boolean = false;
 
   private selectedFile: { data: any, base64: string } = { data: null, base64: null };
 

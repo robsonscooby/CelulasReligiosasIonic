@@ -25,7 +25,10 @@
           <ion-label floating>Digite seu nome</ion-label>
           <ion-input type="text" [(ngModel)]="data.nickname" name="nickname" required=""></ion-input>
         </ion-item>
-        <button ion-button full round (click)="enterNickname()">Enter</button>
+        <p></p>
+      <ion-buttons text-center>
+        <button ion-button round outline (click)="enterNickname()">Entrar</button>
+      </ion-buttons>
       </ion-col>
     </ion-row>
     <ion-row justify-content-center align-items-center *ngIf="chatManagement == 'room' && (rooms | async ) == 0">

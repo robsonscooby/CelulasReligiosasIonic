@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { FirebaseApp } from 'angularfire2';
-import { GrupoService } from "./grupo/grupo.service";
 import { Grupo } from "../model/grupo.model";
 
 @Injectable()
@@ -10,9 +9,7 @@ export class FirebaseMessagingProvider {
     private config_key_name = 'fcmTokenCelRel';
     private unsubscribeOnTokenRefresh = () => { };
 
-    constructor(
-        private app: FirebaseApp,
-        private grupo: GrupoService) {}
+    constructor(private app: FirebaseApp) {}
 
     public createSubscribe(code: string): void {
         this.messaging = this.app.messaging();
@@ -50,8 +47,8 @@ export class FirebaseMessagingProvider {
                     return;
                 }
                
-                grupo.tk = currentToken;
-                this.grupo.save(grupo);
+                // grupo.tk = currentToken;
+                // this.grupo.save(grupo);
 
                 return localStorage.setItem(this.config_key_name,currentToken);
             } else {

@@ -7,9 +7,11 @@
   <ion-grid col-12 col-md-4>
     <ion-grid *ngIf="selectedFile.base64">
       <img [src]="selectedFile.base64" class="img-top-profile">
-      <button ion-button icon-only (click)="selectedFile = { data: null, base64: null }">
-        <ion-icon name="ios-trash"></ion-icon>
-      </button>
+      <ion-buttons text-center>
+        <button ion-button round outline (click)="selectedFile = { data: null, base64: null }">
+          <ion-icon name="ios-trash"></ion-icon>
+        </button>
+      </ion-buttons>
     </ion-grid>
     <div *ngIf="!selectedFile.base64">
       <div class="img-input" (click)="inputFile.click()">
